@@ -1,139 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>speed tester</title>
     <style>
-        .container {
-            display: grid;
-            grid-template-columns: auto auto auto;
-        }
+      .container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+      }
 
-        .container div {
-            background-color: #f1f1f1;
-            border: 1px solid black;
-            height: 150px;
-            font-size: 30px;
-            text-align: center;
-        }
+      .container div {
+        background-color: #f1f1f1;
+        border: 1px solid black;
+        height: 150px;
+        font-size: 30px;
+        text-align: center;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <section>
-        <label for="">Select game length:</label>
-        <select style="padding: 20px" id="length">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-        </select>
+      <label for="">Select game length:</label>
+      <select style="padding: 20px" id="length">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
 
-        <label for="">Select a difficulty:</label>
-        <select style="padding: 20px" id="diffuclty">
-            <option value="easy">Easy</option>
-            <option value="medium">medium</option>
-            <option value="high">High</option>
-        </select>
-        <button style="padding: 20px" id="start">Click me to start!</button>
+      <label for="">Select a difficulty:</label>
+      <select style="padding: 20px" id="diffuclty">
+        <option value="easy">Easy</option>
+        <option value="medium">medium</option>
+        <option value="high">High</option>
+      </select>
+      <button style="padding: 20px" id="start">Click me to start!</button>
     </section>
 
-
     <section class="container">
-        <div id="1"> </div>
-        <div id="2"> </div>
-        <div id="3"> </div>
-        <div id="4"> </div>
-        <div id="5"> </div>
-        <div id="6"> </div>
-        <div id="7"> </div>
-        <div id="8"> </div>
-        <div id="9"> </div>
-        <div id="10"> </div>
-        <div id="11"> </div>
-        <div id="12"> </div>
+      <div id="1"></div>
+      <div id="2"></div>
+      <div id="3"></div>
+      <div id="4"></div>
+      <div id="5"></div>
+      <div id="6"></div>
+      <div id="7"></div>
+      <div id="8"></div>
+      <div id="9"></div>
+      <div id="10"></div>
+      <div id="11"></div>
+      <div id="12"></div>
     </section>
     <h1 id="counter">0</h1>
 
     <section>
-        <h1>Average Score:</h1>
-        <h2 id="average"></h2>
+      <h1>Average Score:</h1>
+      <h2 id="average"></h2>
     </section>
 
     <script>
-        const start = document.getElementById('start');
-        const counter = document.getElementById('counter');
-        const average = document.getElementById('average');
+      const start = document.getElementById("start");
+      const counter = document.getElementById("counter");
+      const average = document.getElementById("average");
+      const length = document.getElementById("length");
+      const times = [];
+      const myDivs = [];
 
-        const times = []
-        const myDivs = []
+      for (i = 0; i < 13; i++) {
+        myDivs.push(document.getElementById(`${i}`));
+      }
 
-        for (i = 0; i < 13; i++) {
-            myDivs.push(document.getElementById(`${i}`));
-        }
+      start.addEventListener("click", () => {
+        runGame();
+        start.style.display = "none";
+      });
 
-        start.addEventListener("click", () => {
-            runGame()
-            start.style.display = "none"
-        })
+      var randomIndex, div;
 
-        var randomIndex, div
+      function runGame() {
+        if (counter.textContent == length.value) return runScore();
+        randomIndex = Math.floor(Math.random() * 12) + 1;
+        div = myDivs[randomIndex];
+        div.style.backgroundColor = "red";
+        startTimer();
 
-        function runGame() {
-            if (counter.textContent == 10) return runScore();
-            randomIndex = Math.floor(Math.random() * 12) + 1
-            div = myDivs[randomIndex]
-            div.style.backgroundColor = "red";
-            startTimer()
+        div.addEventListener(
+          "click",
+          function () {
+            div.style.backgroundColor = "green";
+            stopTimer();
 
-            div.addEventListener("click", function () {
-                div.style.backgroundColor = "green"
-                stopTimer()
+            setTimeout(() => {
+              div.style.backgroundColor = "#f1f1f1";
+            }, 100);
+            increaseCounter();
+            setTimeout(() => {
+              runGame();
+            }, 1000);
+          },
+          { once: true },
+        );
+      }
 
-                setTimeout(() => {
-                    div.style.backgroundColor = "#f1f1f1";
-                }, 100)
-                increaseCounter()
-                setTimeout(() => {
-                    runGame()
-                }, 1000)
+      var sumTimes;
 
-            }, { once: true })
-        }
+      function runScore() {
+        sumTimes = 0;
+        times.forEach((time) => {
+          sumTimes = sumTimes + time;
+        });
 
-        var sumTimes
+        average.textContent = sumTimes / 10;
+      }
 
-        function runScore() {
-            sumTimes = 0;
-            times.forEach(time => {
-                sumTimes = sumTimes + time
-            });
+      function increaseCounter() {
+        counter.textContent = +counter.textContent + 1;
+        console.log(counter.textContent);
+      }
 
-            average.textContent = (sumTimes / 10)
-        }
+      var totalTime, startTime, endTime;
 
+      function startTimer() {
+        startTime = performance.now();
+      }
 
-        function increaseCounter() {
-            counter.textContent = +counter.textContent + 1;
-            console.log(counter.textContent)
-        }
-
-
-        var totalTime, startTime, endTime
-
-        function startTimer() {
-            startTime = performance.now()
-        }
-
-        function stopTimer() {
-            endTime = performance.now();
-            totalTime = Math.floor(startTime - endTime);
-            times.push(totalTime);
-            console.log(times);
-        }
-
+      function stopTimer() {
+        endTime = performance.now();
+        totalTime = Math.floor(endTime - startTime);
+        times.push(totalTime);
+        console.log(times);
+      }
     </script>
-</body>
-
+  </body>
 </html>
