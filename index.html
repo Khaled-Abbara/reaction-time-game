@@ -67,7 +67,7 @@
   <section class="result-screen" id="result-screen">
     <h1>Average Score:</h1>
     <h2 id="average"></h2>
-    <button id="reset">New Game</button>
+    <button style="padding: 20px" id="reset">New Game</button>
   </section>
 
   <script>
@@ -213,7 +213,7 @@
 
       const sum = gameState.times.reduce((a, b) => a + b, 0);
 
-      const avg = sum / Number(elements.length.value);
+      const avg = Math.floor(sum / Number(elements.length.value));
 
       elements.average.textContent = `${Math.round(avg)} ms`;
 
