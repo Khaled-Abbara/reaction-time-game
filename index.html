@@ -6,34 +6,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>speed tester</title>
   <style>
-    #counter {
-      display: none;
+    /* Reset and body */
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
     }
 
-
+    /* Main menu styling */
     .main-menu {
       display: flex;
       flex-direction: column;
       gap: 1em;
+      padding: 2em;
+      max-width: 400px;
+      margin: 2em auto;
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
+    .main-menu h1 {
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .main-menu label {
+      margin-bottom: 0.5em;
+    }
+
+    .main-menu select,
+    .main-menu button {
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .main-menu button:hover,
+    .main-menu select:hover {
+      background-color: #3a3a3a;
+    }
+
+    /* Counter */
+    #counter {
+      display: none;
+      font-size: 4em;
+      text-align: center;
+      color: #ff5252;
+    }
+
+    /* Game container */
     .game-container {
       display: grid;
+      gap: 10px;
       grid-template-columns: auto auto auto auto;
+      max-width: 600px;
+      margin: 2em auto;
     }
 
     .game-container div {
-      background-color: #f1f1f1;
-      border: 1px solid black;
-      height: 150px;
-      font-size: 30px;
-      text-align: center;
+      background-color: #2c2c2c;
+      border: 2px solid #444;
+      border-radius: 8px;
+      height: 120px;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      /* Smooth color transitions */
+      transition: background-color 0.25s ease, transform 0.2s ease;
     }
 
+    /* Flash effect when active */
+    .game-container div.active {
+      background-color: #ff5252 !important;
+      /* matches JS active red */
+      transform: scale(1.05);
+    }
+
+    /* Flash effect when clicked */
+    .game-container div.success {
+      background-color: #4caf50 !important;
+      /* matches JS success green */
+      transform: scale(1.05);
+    }
+
+    /* Result screen */
     .result-screen {
       display: none;
       flex-direction: column;
       gap: 1em;
+      text-align: center;
+      margin: 2em auto;
+    }
+
+    .result-screen h1,
+    .result-screen h2 {
+      color: #ffffff;
+    }
+
+    .result-screen button {
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .result-screen button:hover {
+      background-color: #3a3a3a;
     }
   </style>
 </head>
@@ -104,7 +196,7 @@
     const COLORS = {
       active: "red",
       success: "green",
-      default: "#f1f1f1"
+      default: "#2c2c2c"
     };
 
     /* ---------------- EVENT LISTENERS ---------------- */
