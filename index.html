@@ -8,7 +8,7 @@
   <style>
     .game-container {
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: auto auto auto auto;
     }
 
     .game-container div {
@@ -32,16 +32,16 @@
     </select>
 
     <label for="">Select a difficulty:</label>
-    <select style="padding: 20px" id="diffuclty">
-      <option value="easy">Easy</option>
-      <option value="medium">medium</option>
-      <option value="high">High</option>
+    <select style="padding: 20px" id="difficulty">
+      <option value="12">Easy</option>
+      <option value="16">medium</option>
+      <option value="20">High</option>
     </select>
     <button style="padding: 20px" id="start">Click me to start!</button>
   </section>
 
   <section class="game-container">
-    <div id="1"></div>
+    <!-- <div id="1"></div>
     <div id="2"></div>
     <div id="3"></div>
     <div id="4"></div>
@@ -52,7 +52,7 @@
     <div id="9"></div>
     <div id="10"></div>
     <div id="11"></div>
-    <div id="12"></div>
+    <div id="12"></div> -->
   </section>
   <h1 id="counter">0</h1>
 
@@ -63,26 +63,36 @@
 
   <script>
     const start = document.getElementById("start");
-    const gameContainer = document.getElementById("game-container")
+    const gameContainer = document.getElementById("game-container");
     const counter = document.getElementById("counter");
     const average = document.getElementById("average");
     const length = document.getElementById("length");
+    const difficulty = document.getElementById("difficulty").value;
+
     const times = [];
     const myDivs = [];
 
+    function initializeGame() {
 
+      for (i = 0; i < difficulty + 1; i++) {
+        generateBox(i);
+      }
 
-    for (i = 0; i < 13; i++) {
-      myDivs.push(document.getElementById(`${i}`));
+      for (i = 0; i < difficulty + 1; i++) {
+        myDivs.push(document.getElementById(`${i}`));
+      }
     }
 
+
     start.addEventListener("click", () => {
+      initializeGame()
       runGame();
       start.style.display = "none";
     });
 
 
     function generateBox(BoxId) {
+
       gameContainer.appendChild(Object.assign(document.createElement('div'), { id: BoxId }));
     }
 
