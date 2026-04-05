@@ -56,6 +56,8 @@
       <option value="20">High</option>
     </select>
     <button style="padding: 20px" id="start">Click me to start!</button>
+    <button style="padding: 20px" id="past-scores">view past scores</button>
+    <h3 id="result-past-scores"></h3>
   </section>
 
   <h1 id="counter">0</h1>
@@ -80,7 +82,9 @@
       average: document.getElementById("average"),
       length: document.getElementById("length"),
       difficulty: document.getElementById("difficulty"),
-      reset: document.getElementById("reset")
+      reset: document.getElementById("reset"),
+      pastScores: document.getElementById("past-scores"),
+      resultPastScores: document.getElementById("result-past-scores")
     };
 
     /* ---------------- GAME STATE ---------------- */
@@ -104,6 +108,7 @@
 
     elements.start.addEventListener("click", startGame);
     elements.reset.addEventListener("click", resetGame);
+    elements.pastScores.addEventListener("click", showPastScores)
 
     /* ---------------- GAME FLOW ---------------- */
 
@@ -215,6 +220,19 @@
       gameState.averages.push(avg);
     }
 
+    function showPastScores() {
+      if (gameState.averages.length > 0) {
+
+        var message = ""
+        for (let i = 0; i < gameState.averages.length; i++) {
+          message += `Game ${i + 1}: ${gameState.averages[i]} <br>`
+        }
+        elements.resultPastScores.innerHTML = message;
+
+      } else {
+        elements.resultPastScores.textContent = "You haven't played yet";
+      }
+    }
     /* ---------------- RESET ---------------- */
 
     function resetGame() {
@@ -224,6 +242,7 @@
 
       elements.counter.textContent = "0";
       elements.average.textContent = "";
+      elements.resultPastScores.textContent = "";
 
       elements.gameContainer.innerHTML = "";
       elements.gameContainer.style.display = "grid";
