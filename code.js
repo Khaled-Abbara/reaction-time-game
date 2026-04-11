@@ -14,6 +14,17 @@ const elements = {
     resultPastScores: document.getElementById("result-past-scores")
 };
 
+/* ---------------- GAME SOUNDS ---------------- */
+
+const sounds = {
+    click1: new Audio("/assets/block-1.mp3"),
+    click2: new Audio("/assets/block-2.mp3"),
+    success: new Audio("/assets/success-chime.mp3")
+};
+
+
+
+
 /* ---------------- GAME STATE ---------------- */
 
 const gameState = {
@@ -100,6 +111,13 @@ function handleBoxClick(box) {
 
     stopTimer();
 
+    if (elements.counter.textContent % 2 == 0) {
+        sounds.click2.play()
+    } else {
+        sounds.click1.play()
+    }
+
+
     setTimeout(() => {
         box.style.backgroundColor = COLORS.default;
     }, 100);
@@ -137,6 +155,8 @@ function showResults() {
 
     elements.gameContainer.style.display = "none";
     elements.resultScreen.style.display = "flex";
+
+    sounds.success.play()
 
     const sum = gameState.times.reduce((a, b) => a + b, 0);
 
