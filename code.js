@@ -17,9 +17,9 @@ const elements = {
 /* ---------------- GAME SOUNDS ---------------- */
 
 const sounds = {
-    click1: new Audio("/assets/block-1.mp3"),
-    click2: new Audio("/assets/block-2.mp3"),
-    success: new Audio("/assets/success-chime.mp3")
+    click1: new Audio("assets/block-1.mp3"),
+    click2: new Audio("assets/block-2.mp3"),
+    success: new Audio("assets/success-chime.mp3")
 };
 
 
