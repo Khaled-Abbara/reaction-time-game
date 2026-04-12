@@ -1,6 +1,8 @@
+// =====================
+// SETUP / CONSTANTS
+// =====================
 const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
-
 
 const scoreScreen = document.getElementById("score-screen");
 const gameContainer = document.getElementById("game-container");
@@ -14,95 +16,125 @@ const COLORS = {
 
 const gameState = {
     maxBoxCount: 9,
-    timer: 0,
-    score: 0,
+    score: -1,
     boxes: [],
-    highlightedBox: ""
-}
+    time: 1600,
+    countDown: null,
+    selectedBox: null
+};
 
-startGameBtn.addEventListener("click", ()=> {
-    initializeGame()
-})
 
+// =====================
+// EVENT LISTENERS
+// =====================
+startGameBtn.addEventListener("click", initializeGame);
+
+
+// =====================
+// CORE GAME FLOW
+// =====================
 function initializeGame() {
-    menuPage.style.display = "none"
-    createBoxes()
-    runGame()
+    menuPage.style.display = "none";
+    gameState.isActive = true;
+
+    createBoxes();
+    gameLoop();
 }
 
-async function runGame() {
-    highlightRandomBox()
-    const result = new Promise.race([runTimer(), wrongBox()])
-
-    if (result == true) {
-        increaseScore()
-        displayScore()
-        deHighlightRandomBox()
-        runGame()
-    } else {
-        gameOver()
-    }
+function gameLoop() {
+    decreaseTime();
+    updateScore();
+    selectRandomBox();
+    handleClick();
+    startTimer();
 }
 
+function gameOver() {
+    gamePage.style.display = "none";
+    clearGameState();
+    alert("Game over!!");
+}
+
+
+// =====================
+// GAME MECHANICS
+// =====================
 function createBoxes() {
+    gameContainer.innerHTML = "";
+    
     for (let c = 0; c < gameState.maxBoxCount; c++) {
         const box = document.createElement("div");
         box.id = c;
     
         gameContainer.appendChild(box);
         gameState.boxes.push(box);
-
     }
 }
 
-function increaseScore() {
-    gameState.score += 1;
-}
-
-function displayScore() {
+function updateScore() {
+    gameState.score++;
     scoreScreen.innerText = gameState.score;
 }
 
-function highlightRandomBox() {
+function selectRandomBox() {
     const index = Math.floor(Math.random() * gameState.boxes.length);
     const box = gameState.boxes[index];
 
-    gameState.highlightedBox = box;
+    gameState.selectedBox = box;
     box.style.backgroundColor = COLORS.active;
-
-
 }
 
-function deHighlightRandomBox() {
-    gameState.highlightedBox.style.backgroundColor = COLORS.default
+function handleClick() {
+    gameState.selectedBox.addEventListener("click", () => {
+        clearTimeout(gameState.countDown);
+        gameState.selectedBox.style.backgroundColor = COLORS.success;
+
+        setTimeout(() => {
+            deSelectRandomBox();
+            gameLoop();
+        }, 100);
+
+
+    }, { once: true });
 }
 
-function gameOver() {
-    gamePage.style.display = "none";
-    alert("Game over!!")
+function startTimer() {
+    gameState.countDown = setTimeout(() => {
+        gameOver();
+    }, gameState.time);
 }
 
-function wrongBox() {
-    return new Promise((resolve) => {
-        gameState.boxes.forEach((box) => {
-            if (box !== gameState.highlightedBox) {
-                box.addEventListener("click", () => {
-                    resolve(false);
-                }, { once: true });
-            }
-        });
-    });
+
+// =====================
+// HELPERS / CLEANUP
+// =====================
+function deSelectRandomBox() {
+    gameState.selectedBox.style.backgroundColor = COLORS.default;
+    gameState.selectedBox = null;
 }
 
-function runTimer() {
-    return new Promise((resolve) => {
-        const timer = setTimeout(() => {
-            resolve(false);
-        }, 2000);
+function clearGameState() {
+    gameState.score = -1;
+    gameState.boxes = [];
+    gameState.countDown = null;
+    gameState.selectedBox = null;
+}
 
-        gameState.highlightedBox.addEventListener("click", () => {
-            clearTimeout(timer);
-            resolve(true);
-        }, { once: true });
-    });
+function decreaseTime() {
+
+    if (gameState.score <= 8) {
+        gameState.time -= 50;
+
+    } else if (gameState.score <= 16) {
+        gameState.time -= 40;
+
+    } else if (gameState.score <= 24) {
+        gameState.time -= 30;  
+
+    } else if (gameState.score <= 32) {
+        gameState.time -= 20;  
+
+    } else if (gameState.time > 260) {
+        gameState.time -= 10;
+    }
 }
