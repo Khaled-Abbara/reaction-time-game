@@ -13,7 +13,8 @@ const COLORS = {
 const gameState = {
     timer: 0,
     score: 0,
-    boxes: []
+    boxes: [],
+    highlighedBox: ""
 }
 
 startGameBtn.addEventListener("click", ()=> {
@@ -41,7 +42,17 @@ function highlightRandomBox() {
     const index = Math.floor(Math.random() * gameState.boxes.length);
     const box = gameState.boxes[index];
 
-     box.style.backgroundColor = COLORS.active;
+    gameState.highlighedBox = box;
+    box.style.backgroundColor = COLORS.active;
 
 
+}
+
+function timeExpired() {
+    gamePage.style.display = "none";
+}
+
+
+function startTimer() {
+    setTimeout(timeExpired, 5000);
 }
