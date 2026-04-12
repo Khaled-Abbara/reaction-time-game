@@ -69,6 +69,7 @@ function initializeGame() {
     }
 }
 
+
 function runGame() {
 
     const targetRounds = Number(elements.length.value);
