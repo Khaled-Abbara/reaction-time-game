@@ -1,8 +1,10 @@
-const menuPage = document.getElementById("menu-page")
-const gamePage = document.getElementById("game-page")
+const menuPage = document.getElementById("menu-page");
+const gamePage = document.getElementById("game-page");
 
-const gameContainer = document.getElementById("game-container")
-const startGameBtn = document.getElementById("start-game-btn")
+
+const scoreScreen = document.getElementById("score-screen");
+const gameContainer = document.getElementById("game-container");
+const startGameBtn = document.getElementById("start-game-btn");
 
 const COLORS = {
     active: "red",
@@ -11,24 +13,39 @@ const COLORS = {
 };
 
 const gameState = {
+    maxBoxCount: 9,
     timer: 0,
     score: 0,
     boxes: [],
-    highlighedBox: ""
+    highlightedBox: ""
 }
 
 startGameBtn.addEventListener("click", ()=> {
-    startGame()
+    initializeGame()
 })
 
-function startGame() {
+function initializeGame() {
     menuPage.style.display = "none"
-    createBoxes(9)
-    highlightRandomBox()
+    createBoxes()
+    runGame()
 }
 
-function createBoxes(maxBoxCount) {
-    for (let c = 0; c < maxBoxCount; c++) {
+async function runGame() {
+    highlightRandomBox()
+    const result = new Promise.race([runTimer(), wrongBox()])
+
+    if (result == true) {
+        increaseScore()
+        displayScore()
+        deHighlightRandomBox()
+        runGame()
+    } else {
+        gameOver()
+    }
+}
+
+function createBoxes() {
+    for (let c = 0; c < gameState.maxBoxCount; c++) {
         const box = document.createElement("div");
         box.id = c;
     
@@ -38,21 +55,54 @@ function createBoxes(maxBoxCount) {
     }
 }
 
+function increaseScore() {
+    gameState.score += 1;
+}
+
+function displayScore() {
+    scoreScreen.innerText = gameState.score;
+}
+
 function highlightRandomBox() {
     const index = Math.floor(Math.random() * gameState.boxes.length);
     const box = gameState.boxes[index];
 
-    gameState.highlighedBox = box;
+    gameState.highlightedBox = box;
     box.style.backgroundColor = COLORS.active;
 
 
 }
 
-function timeExpired() {
-    gamePage.style.display = "none";
+function deHighlightRandomBox() {
+    gameState.highlightedBox.style.backgroundColor = COLORS.default
 }
 
+function gameOver() {
+    gamePage.style.display = "none";
+    alert("Game over!!")
+}
 
-function startTimer() {
-    setTimeout(timeExpired, 5000);
+function wrongBox() {
+    return new Promise((resolve) => {
+        gameState.boxes.forEach((box) => {
+            if (box !== gameState.highlightedBox) {
+                box.addEventListener("click", () => {
+                    resolve(false);
+                }, { once: true });
+            }
+        });
+    });
+}
+
+function runTimer() {
+    return new Promise((resolve) => {
+        const timer = setTimeout(() => {
+            resolve(false);
+        }, 2000);
+
+        gameState.highlightedBox.addEventListener("click", () => {
+            clearTimeout(timer);
+            resolve(true);
+        }, { once: true });
+    });
 }
