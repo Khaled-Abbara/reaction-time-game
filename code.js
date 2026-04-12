@@ -69,6 +69,7 @@ function initializeGame() {
     }
 }
 
+
 function runGame() {
 
     const targetRounds = Number(elements.length.value);
@@ -198,3 +199,5 @@ function resetGame() {
     elements.resultScreen.style.display = "none";
     elements.mainMenu.style.display = "flex";
 }
+
+
