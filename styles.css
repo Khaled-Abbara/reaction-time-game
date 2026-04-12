@@ -1,4 +1,11 @@
+#game-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.5em
+}
+
 #game-container div {
-    padding: 1em;
+    width: 4em;
+    height: 4em;
     border: 1px, solid, black;
 }
