@@ -10,7 +10,17 @@
   <main class="menu-page" id="menu-page">
     <h1>game logo</h1>
     <button id="start-game-btn">Start</button>
+    <button id="tutorial">How to play</button>
   </main>
+
+  <dialog id="sign-up-pop-up">
+      <h2>Create an Account</h2>
+      <input id="username" placeholder="choose a simple name">
+      <input id="password" placeholder="choose a simple password">
+      <button onclick="createAccount()">submit</button>
+      <p>Note: screenshot your password for easy future login</p>
+      <p id="error"></p>
+  </dialog>
 
   <main class="game-page" id="game-page">
     <h1 id="score-screen">0</h1>

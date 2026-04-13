@@ -3,10 +3,15 @@
 // =====================
 const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
+const signUpPopUp = document.getElementById("sign-up-pop-up")
 
 const scoreScreen = document.getElementById("score-screen");
 const gameContainer = document.getElementById("game-container");
 const startGameBtn = document.getElementById("start-game-btn");
+
+const usernameInput = document.getElementById("username")
+const passwordInput = document.getElementById("password")
+const error = document.getElementById("error")
 
 const COLORS = {
     active: "red",
@@ -23,19 +28,53 @@ const gameState = {
     selectedBox: null
 };
 
+const account = {
+    username: "",
+    password: ""
+}
 
 // =====================
 // EVENT LISTENERS
 // =====================
 startGameBtn.addEventListener("click", initializeGame);
+document.addEventListener("DOMContentLoaded", () => {
+    signUpPopUp.showModal();
+});
 
+// =====================
+// Create Account
+// =====================
+function createAccount() {
+    if (username.value == "") {
+        error.innerText = "Username is empty."
+        
+    } else if (password.value == "") {
+        error.innerText = "Password is empty."
+        
+    } else if (username.value.length < 5) {
+        error.innerText = "Username should be more than 5 characters"
+        
+    } else if (password.value.length < 5) {
+        error.innerText = "Password should be more than 5 characters"
+        
+    } else if (username.value.includes(" ") || password.value.includes(" ")) {
+        error.innerText = "Username or password contains spaces"
+
+    } else {
+        account.username = username.value;
+        account.password = password.value;
+
+    }
+
+    console.log(account)
+}
 
 // =====================
 // CORE GAME FLOW
 // =====================
 function initializeGame() {
     menuPage.style.display = "none";
-    gameState.isActive = true;
+    gamePage.style.display = "flex";
 
     createBoxes();
     gameLoop();
@@ -50,9 +89,9 @@ function gameLoop() {
 }
 
 function gameOver() {
-    gamePage.style.display = "none";
-    clearGameState();
-    alert("Game over!!");
+    // gamePage.style.display = "none";
+    // clearGameState();
+    // alert("Game over!!");
 }
 
 
