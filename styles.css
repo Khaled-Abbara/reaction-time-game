@@ -1,28 +1,28 @@
 .game-page {
-    margin: auto;
-    display: none;
-    flex-direction: column;
-    max-width: 500px;
+  margin: auto;
+  display: none;
+  flex-direction: column;
+  max-width: 500px;
 }
 #game-container {
-    display: grid;
-    place-items: center;
-    grid-template-columns: auto auto auto;
-    gap: 0.5em
+  display: grid;
+  place-items: center;
+  grid-template-columns: auto auto auto;
+  gap: 0.5em;
 }
 
 #game-container div {
-    width: 4em;
-    height: 4em;
-    border: 1px, solid, black;
+  width: 4em;
+  height: 4em;
+  border: 1px, solid, black;
 }
 
-#sign-up-pop-up {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+#sign-up-pop-up div {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 #error {
-    color: red;
+  color: red;
 }

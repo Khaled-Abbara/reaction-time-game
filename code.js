@@ -52,7 +52,7 @@ const gameState = {
 // EVENT LISTENERS
 // =====================
 startGameBtn.addEventListener("click", initializeGame);
-document.addEventListener("DOMContentLoaded", checkIfUserIsLoggedIn);
+checkIfUserIsLoggedIn();
 createAccountBtn.addEventListener("click", createAccount);
 
 // =====================
@@ -60,9 +60,12 @@ createAccountBtn.addEventListener("click", createAccount);
 // =====================
 function checkIfUserIsLoggedIn() {
   const userKey = localStorage.getItem("id");
+  console.log(userKey);
 
   if (userKey == null) {
     signUpPopUp.showModal();
+  } else {
+    signUpPopUp.close();
   }
 }
 
@@ -86,6 +89,8 @@ function createAccount() {
       password: password.value,
       score: null,
     });
+
+    signUpPopUp.close();
   }
 }
 

@@ -14,12 +14,14 @@
     </main>
 
     <dialog id="sign-up-pop-up">
-      <h2>Create an Account</h2>
-      <input id="username" placeholder="choose a simple name" />
-      <input id="password" placeholder="choose a simple password" />
-      <button id="create-account-btn">submit</button>
-      <p>Note: screenshot your password for easy future login</p>
-      <p id="error"></p>
+      <div>
+        <h2>Create an Account</h2>
+        <input id="username" placeholder="choose a simple name" />
+        <input id="password" placeholder="choose a simple password" />
+        <button id="create-account-btn">submit</button>
+        <p>Note: screenshot your password for easy future login</p>
+        <p id="error"></p>
+      </div>
     </dialog>
 
     <main class="game-page" id="game-page">
@@ -27,7 +29,6 @@
       <section id="game-container"></section>
     </main>
 
-    <script type="module"></script>
-    <script type="module" src="code.js"></script>
+    <script type="module" src="code.js" defer></script>
   </body>
 </html>
