@@ -1,38 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-import {
-  getDatabase,
-  ref,
-  get,
-} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDMcOgQeIhymv86NsISdP1WgQXPh19D_Hc",
-  authDomain: "reaction-game-6ba73.firebaseapp.com",
-  databaseURL:
-    "https://reaction-game-6ba73-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "reaction-game-6ba73",
-  storageBucket: "reaction-game-6ba73.firebasestorage.app",
-  messagingSenderId: "762088583051",
-  appId: "1:762088583051:web:56a25eb3105b07b160498e",
-  measurementId: "G-HZB097HP7H",
-};
-
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+import { initializeApp, getDatabase, ref, get } from "./firebase.js";
 
-const dbRef = ref(db, "users");
-
-get(ref(db, "users")).then((snap) => {
-  console.log(snap.val());
-});
 // =====================
 // SETUP / CONSTANTS
 // =====================
