@@ -20,12 +20,15 @@ const db = getDatabase(app);
 const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
 const signUpPopUp = document.getElementById("sign-up-pop-up");
+const gameOverPage = document.getElementById("game-over-page");
 
 const scoreScreen = document.getElementById("score-screen");
+const gameOverScoreScreen = document.getElementById("game-over-score-screen");
 const gameContainer = document.getElementById("game-container");
 
 const createAccountBtn = document.getElementById("create-account-btn");
 const startGameBtn = document.getElementById("start-game-btn");
+const resetBtn = document.getElementById("reset-button");
 const loginStateBtn = document.getElementById("login-state-btn");
 
 const accountHeader = document.getElementById("account-header");
@@ -61,6 +64,7 @@ checkIfUserIsLoggedIn();
 startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
 loginStateBtn.addEventListener("click", toggleAccountPopupContent);
+resetBtn.addEventListener("click");
 
 // =====================
 // AUTH
@@ -152,9 +156,17 @@ async function loginUser(username, password) {
 // =====================
 // GAME
 // =====================
+
+function resetGame() {
+  menuPage.style.display = "flex";
+  gamePage.style.display = "none";
+  gameOverPage.style.display = "none";
+}
+
 function initializeGame() {
   menuPage.style.display = "none";
   gamePage.style.display = "flex";
+  gameOverPage.style.display = "none";
 
   createBoxes();
   gameLoop();
@@ -220,6 +232,10 @@ function startTimer() {
 }
 
 function gameOver() {
+  gameOverPage.style.display = "flex";
+  gamePage.style.display = "none";
+
+  gameOverScoreScreen.innerText = gameState.score;
   alert("Game Over");
 }
 
@@ -237,4 +253,12 @@ function decreaseTime() {
   else if (gameState.score <= 24) gameState.time -= 30;
   else if (gameState.score <= 32) gameState.time -= 20;
   else if (gameState.time > 260) gameState.time -= 10;
+}
+
+function clearGameState() {
+  gameState.score = 0;
+  gameState.boxes = [];
+  gameState.time = 1600;
+  gameState.countDown = null;
+  gameState.selectedBox = null;
 }
