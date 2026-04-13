@@ -28,7 +28,7 @@ const gameContainer = document.getElementById("game-container");
 
 const createAccountBtn = document.getElementById("create-account-btn");
 const startGameBtn = document.getElementById("start-game-btn");
-const resetBtn = document.getElementById("reset-button");
+const resetBtn = document.getElementById("reset-btn");
 const loginStateBtn = document.getElementById("login-state-btn");
 
 const accountHeader = document.getElementById("account-header");
@@ -64,7 +64,7 @@ checkIfUserIsLoggedIn();
 startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
 loginStateBtn.addEventListener("click", toggleAccountPopupContent);
-resetBtn.addEventListener("click");
+resetBtn.addEventListener("click", resetGame);
 
 // =====================
 // AUTH
@@ -85,10 +85,8 @@ function toggleAccountPopupContent() {
 
     if (isLogin) {
         accountHeader.innerText = "Login";
-        createAccountBtn.innerText = "Login";
     } else {
         accountHeader.innerText = "Create an Account";
-        createAccountBtn.innerText = "Create Account";
     }
 
     error.innerText = "";
@@ -161,6 +159,8 @@ function resetGame() {
     menuPage.style.display = "flex";
     gamePage.style.display = "none";
     gameOverPage.style.display = "none";
+
+    clearGameState();
 }
 
 function initializeGame() {
@@ -231,12 +231,22 @@ function startTimer() {
     }, gameState.time);
 }
 
-function gameOver() {
+async function gameOver() {
     gameOverPage.style.display = "flex";
     gamePage.style.display = "none";
 
     gameOverScoreScreen.innerText = gameState.score;
-    alert("Game Over");
+
+    const userKey = localStorage.getItem("id");
+    const snapshot = await get(ref(db, "users/" + userKey));
+    const oldTopScore = snapshot.val().score;
+
+    if (gameState.score > oldTopScore) {
+        set(ref(db, "users/" + userKey), {
+            ...userData,
+            score: gameState.score,
+        })
+    }
 }
 
 // =====================
