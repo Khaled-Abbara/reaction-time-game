@@ -56,7 +56,7 @@ let isLogin = false;
 const COLORS = {
     active: "red",
     success: "green",
-    default: "white",
+    default: "#222",
 };
 
 const gameState = {
@@ -136,8 +136,12 @@ function toggleAccountPopupContent() {
 
     if (isLogin) {
         accountHeader.innerText = "Login";
+        loginStateBtn.innerText = "Can't login?.. create account";
+
     } else {
         accountHeader.innerText = "Create an Account";
+        loginStateBtn.innerText = "Have an account?.. login";
+
     }
 
     error.innerText = "";
@@ -289,6 +293,7 @@ async function gameOver() {
     gamePage.style.display = "none";
 
     gameOverScoreScreen.innerText = gameState.score;
+    success.play();
 
     const userKey = localStorage.getItem("id");
     const snapshot = await get(ref(db, "users/" + userKey));

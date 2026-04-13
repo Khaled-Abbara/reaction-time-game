@@ -1,49 +1,114 @@
-.menu-page {
-  margin: 0 auto 0 auto;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 8rem;
+  min-height: 100vh;
+}
+
+.menu-page,
+.game-page,
+.game-over-page {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 1rem;
 }
 
-.game-page {
-  margin: auto;
-  display: none;
-  flex-direction: column;
-  max-width: 500px;
-}
-
-.leaderboard-menu {
-  border: 1px solid black;
-  width: 80%;
-  height: 200px;
-  overflow-y: auto;
-}
-
+.game-page,
 .game-over-page {
   display: none;
-  flex-direction: column;
-  gap: 1em;
-  max-width: 500px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+button {
+  width: 100%;
+  max-width: 280px;
+  padding: 0.8em;
+  background: #1f1f1f;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+#leaderboard-menu {
+  width: 100%;
+  max-width: 300px;
+  height: 180px;
+  overflow-y: auto;
+  background: #141414;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 0.5em;
+  font-size: 0.9rem;
+}
+
+#leaderboard-menu div {
+  padding: 0.3em 0;
+  border-bottom: 1px solid #222;
 }
 
 #game-container {
   display: grid;
-  place-items: center;
-  grid-template-columns: auto auto auto;
-  gap: 0.5em;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6em;
+  width: 100%;
+  max-width: 350px;
 }
 
 #game-container div {
-  width: 4em;
-  height: 4em;
-  border: 1px, solid, black;
+  height: 7rem;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+
+#score-screen {
+  font-size: 1.8rem;
+}
+
+dialog {
+  border: none;
+  border-radius: 10px;
+  background: #121212;
+  color: #fff;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
 }
 
 #sign-up-pop-up div {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding: 1.5em;
+  width: 220px;
+}
+
+input {
+  padding: 0.6em;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
 }
 
 #error {
-  color: red;
+  color: #ff4d4d;
+  font-size: 0.85rem;
 }
