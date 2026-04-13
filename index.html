@@ -1,42 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <main class="menu-page" id="menu-page">
-      <h1>game logo</h1>
-      <button id="start-game-btn">Start</button>
-      <button id="tutorial">How to play</button>
-    </main>
 
-    <dialog id="sign-up-pop-up">
-      <div>
-        <h2 id="account-header">Create an Account</h2>
-        <input id="username" placeholder="choose a simple name" />
-        <input id="password" placeholder="choose a simple password" />
-        <button id="create-account-btn">submit</button>
-        <button id="login-state-btn">Have an account... login</button>
-        <p>Note: screenshot your password for easy future login</p>
-        <p id="error"></p>
-      </div>
-    </dialog>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Document</title>
+</head>
 
-    <main class="game-over-page" id="game-over-page">
-      <h1>GAME OVER</h1>
-      <h2>Score:</h2>
-      <h2 id="game-over-score-screen"></h2>
-      <button id="reset-btn">reset</button>
-    </main>
+<body>
+  <main class="menu-page" id="menu-page">
+    <h1>game logo</h1>
+    <button id="start-game-btn">Start</button>
+    <button id="tutorial">How to play</button>
+  </main>
 
-    <main class="game-page" id="game-page">
-      <h1 id="score-screen">0</h1>
-      <section id="game-container"></section>
-    </main>
+  <dialog id="sign-up-pop-up">
+    <div>
+      <h2 id="account-header">Create an Account</h2>
+      <input id="username" placeholder="choose a simple name" />
+      <input id="password" placeholder="choose a simple password" />
+      <button id="create-account-btn">submit</button>
+      <button id="login-state-btn">Have an account... login</button>
+      <p>Note: screenshot your password for easy future login</p>
+      <p id="error"></p>
+    </div>
+  </dialog>
 
-    <script type="module" src="code.js" defer></script>
-  </body>
+  <main class="game-over-page" id="game-over-page">
+    <h1>GAME OVER</h1>
+    <h2>Score:</h2>
+    <h2 id="game-over-score-screen"></h2>
+    <button id="reset-btn">reset</button>
+  </main>
+
+  <main class="game-page" id="game-page">
+    <h1 id="score-screen">0</h1>
+    <section id="game-container"></section>
+  </main>
+
+  <script type="module" src="code.js" defer></script>
+</body>
+
 </html>

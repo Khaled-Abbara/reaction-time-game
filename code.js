@@ -2,13 +2,13 @@
 // Firebase
 // =====================
 import {
-  firebaseConfig,
-  initializeApp,
-  getDatabase,
-  ref,
-  get,
-  set,
-  push,
+    firebaseConfig,
+    initializeApp,
+    getDatabase,
+    ref,
+    get,
+    set,
+    push,
 } from "./firebase.js";
 
 const app = initializeApp(firebaseConfig);
@@ -42,18 +42,18 @@ const error = document.getElementById("error");
 let isLogin = false;
 
 const COLORS = {
-  active: "red",
-  success: "green",
-  default: "white",
+    active: "red",
+    success: "green",
+    default: "white",
 };
 
 const gameState = {
-  maxBoxCount: 9,
-  score: -1,
-  boxes: [],
-  time: 1600,
-  countDown: null,
-  selectedBox: null,
+    maxBoxCount: 9,
+    score: -1,
+    boxes: [],
+    time: 1600,
+    countDown: null,
+    selectedBox: null,
 };
 
 // =====================
@@ -70,87 +70,87 @@ resetBtn.addEventListener("click");
 // AUTH
 // =====================
 function checkIfUserIsLoggedIn() {
-  const userKey = localStorage.getItem("id");
+    const userKey = localStorage.getItem("id");
 
-  if (!userKey) {
-    signUpPopUp.showModal();
-  } else {
-    signUpPopUp.close();
-  }
+    if (!userKey) {
+        signUpPopUp.showModal();
+    } else {
+        signUpPopUp.close();
+    }
 }
 
 // Toggle login/register mode
 function toggleAccountPopupContent() {
-  isLogin = !isLogin;
+    isLogin = !isLogin;
 
-  if (isLogin) {
-    accountHeader.innerText = "Login";
-    createAccountBtn.innerText = "Login";
-  } else {
-    accountHeader.innerText = "Create an Account";
-    createAccountBtn.innerText = "Create Account";
-  }
+    if (isLogin) {
+        accountHeader.innerText = "Login";
+        createAccountBtn.innerText = "Login";
+    } else {
+        accountHeader.innerText = "Create an Account";
+        createAccountBtn.innerText = "Create Account";
+    }
 
-  error.innerText = "";
+    error.innerText = "";
 }
 
 // Main button handler (decides login vs register)
 async function createAccount() {
-  const username = usernameInput.value;
-  const password = passwordInput.value;
+    const username = usernameInput.value;
+    const password = passwordInput.value;
 
-  // validation
-  if (!username) return (error.innerText = "Username is empty.");
-  if (!password) return (error.innerText = "Password is empty.");
-  if (username.length < 5)
-    return (error.innerText = "Username must be 5+ characters");
-  if (password.length < 5)
-    return (error.innerText = "Password must be 5+ characters");
-  if (username.includes(" ") || password.includes(" "))
-    return (error.innerText = "No spaces allowed");
+    // validation
+    if (!username) return (error.innerText = "Username is empty.");
+    if (!password) return (error.innerText = "Password is empty.");
+    if (username.length < 5)
+        return (error.innerText = "Username must be 5+ characters");
+    if (password.length < 5)
+        return (error.innerText = "Password must be 5+ characters");
+    if (username.includes(" ") || password.includes(" "))
+        return (error.innerText = "No spaces allowed");
 
-  // LOGIN FLOW
-  if (isLogin) {
-    return loginUser(username, password);
-  }
+    // LOGIN FLOW
+    if (isLogin) {
+        return loginUser(username, password);
+    }
 
-  // REGISTER FLOW
-  const newUser = push(ref(db, "users"));
+    // REGISTER FLOW
+    const newUser = push(ref(db, "users"));
 
-  await set(newUser, {
-    username,
-    password,
-    score: 0,
-  });
+    await set(newUser, {
+        username,
+        password,
+        score: 0,
+    });
 
-  localStorage.setItem("id", newUser.key);
-  signUpPopUp.close();
+    localStorage.setItem("id", newUser.key);
+    signUpPopUp.close();
 }
 
 // LOGIN FUNCTION
 async function loginUser(username, password) {
-  const snapshot = await get(ref(db, "users"));
+    const snapshot = await get(ref(db, "users"));
 
-  if (!snapshot.exists()) {
-    error.innerText = "No users found";
-    return;
-  }
+    if (!snapshot.exists()) {
+        error.innerText = "No users found";
+        return;
+    }
 
-  const users = snapshot.val();
+    const users = snapshot.val();
 
-  const foundUser = Object.entries(users).find(
-    ([key, user]) => user.username === username && user.password === password,
-  );
+    const foundUser = Object.entries(users).find(
+        ([key, user]) => user.username === username && user.password === password,
+    );
 
-  if (!foundUser) {
-    error.innerText = "Wrong username or password";
-    return;
-  }
+    if (!foundUser) {
+        error.innerText = "Wrong username or password";
+        return;
+    }
 
-  const [userKey] = foundUser;
+    const [userKey] = foundUser;
 
-  localStorage.setItem("id", userKey);
-  signUpPopUp.close();
+    localStorage.setItem("id", userKey);
+    signUpPopUp.close();
 }
 
 // =====================
@@ -158,107 +158,107 @@ async function loginUser(username, password) {
 // =====================
 
 function resetGame() {
-  menuPage.style.display = "flex";
-  gamePage.style.display = "none";
-  gameOverPage.style.display = "none";
+    menuPage.style.display = "flex";
+    gamePage.style.display = "none";
+    gameOverPage.style.display = "none";
 }
 
 function initializeGame() {
-  menuPage.style.display = "none";
-  gamePage.style.display = "flex";
-  gameOverPage.style.display = "none";
+    menuPage.style.display = "none";
+    gamePage.style.display = "flex";
+    gameOverPage.style.display = "none";
 
-  createBoxes();
-  gameLoop();
+    createBoxes();
+    gameLoop();
 }
 
 function gameLoop() {
-  decreaseTime();
-  updateScore();
-  selectRandomBox();
-  handleClick();
-  startTimer();
+    decreaseTime();
+    updateScore();
+    selectRandomBox();
+    handleClick();
+    startTimer();
 }
 
 // =====================
 // GAME LOGIC
 // =====================
 function createBoxes() {
-  gameContainer.innerHTML = "";
-  gameState.boxes = [];
+    gameContainer.innerHTML = "";
+    gameState.boxes = [];
 
-  for (let i = 0; i < gameState.maxBoxCount; i++) {
-    const box = document.createElement("div");
-    box.id = i;
+    for (let i = 0; i < gameState.maxBoxCount; i++) {
+        const box = document.createElement("div");
+        box.id = i;
 
-    gameContainer.appendChild(box);
-    gameState.boxes.push(box);
-  }
+        gameContainer.appendChild(box);
+        gameState.boxes.push(box);
+    }
 }
 
 function updateScore() {
-  gameState.score++;
-  scoreScreen.innerText = gameState.score;
+    gameState.score++;
+    scoreScreen.innerText = gameState.score;
 }
 
 function selectRandomBox() {
-  const index = Math.floor(Math.random() * gameState.boxes.length);
-  const box = gameState.boxes[index];
+    const index = Math.floor(Math.random() * gameState.boxes.length);
+    const box = gameState.boxes[index];
 
-  gameState.selectedBox = box;
-  box.style.backgroundColor = COLORS.active;
+    gameState.selectedBox = box;
+    box.style.backgroundColor = COLORS.active;
 }
 
 function handleClick() {
-  gameState.selectedBox.addEventListener(
-    "click",
-    () => {
-      clearTimeout(gameState.countDown);
-      gameState.selectedBox.style.backgroundColor = COLORS.success;
+    gameState.selectedBox.addEventListener(
+        "click",
+        () => {
+            clearTimeout(gameState.countDown);
+            gameState.selectedBox.style.backgroundColor = COLORS.success;
 
-      setTimeout(() => {
-        deSelectBox();
-        gameLoop();
-      }, 100);
-    },
-    { once: true },
-  );
+            setTimeout(() => {
+                deSelectBox();
+                gameLoop();
+            }, 100);
+        },
+        { once: true },
+    );
 }
 
 function startTimer() {
-  gameState.countDown = setTimeout(() => {
-    gameOver();
-  }, gameState.time);
+    gameState.countDown = setTimeout(() => {
+        gameOver();
+    }, gameState.time);
 }
 
 function gameOver() {
-  gameOverPage.style.display = "flex";
-  gamePage.style.display = "none";
+    gameOverPage.style.display = "flex";
+    gamePage.style.display = "none";
 
-  gameOverScoreScreen.innerText = gameState.score;
-  alert("Game Over");
+    gameOverScoreScreen.innerText = gameState.score;
+    alert("Game Over");
 }
 
 // =====================
 // HELPERS
 // =====================
 function deSelectBox() {
-  gameState.selectedBox.style.backgroundColor = COLORS.default;
-  gameState.selectedBox = null;
+    gameState.selectedBox.style.backgroundColor = COLORS.default;
+    gameState.selectedBox = null;
 }
 
 function decreaseTime() {
-  if (gameState.score <= 8) gameState.time -= 50;
-  else if (gameState.score <= 16) gameState.time -= 40;
-  else if (gameState.score <= 24) gameState.time -= 30;
-  else if (gameState.score <= 32) gameState.time -= 20;
-  else if (gameState.time > 260) gameState.time -= 10;
+    if (gameState.score <= 8) gameState.time -= 50;
+    else if (gameState.score <= 16) gameState.time -= 40;
+    else if (gameState.score <= 24) gameState.time -= 30;
+    else if (gameState.score <= 32) gameState.time -= 20;
+    else if (gameState.time > 260) gameState.time -= 10;
 }
 
 function clearGameState() {
-  gameState.score = 0;
-  gameState.boxes = [];
-  gameState.time = 1600;
-  gameState.countDown = null;
-  gameState.selectedBox = null;
+    gameState.score = 0;
+    gameState.boxes = [];
+    gameState.time = 1600;
+    gameState.countDown = null;
+    gameState.selectedBox = null;
 }
