@@ -1,5 +1,18 @@
 // Initialize Firebase
-import { initializeApp, getDatabase, ref, get } from "./firebase.js";
+import {
+  firebaseConfig,
+  initializeApp,
+  getDatabase,
+  ref,
+  get,
+} from "./firebase.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+get(ref(db, "users")).then((snap) => {
+  console.log(snap.val());
+});
 
 // =====================
 // SETUP / CONSTANTS

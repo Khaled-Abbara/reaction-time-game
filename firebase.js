@@ -21,4 +21,4 @@ const firebaseConfig = {
   measurementId: "G-HZB097HP7H",
 };
 
-export { initializeApp, getDatabase, ref, get };
+export { firebaseConfig, initializeApp, getDatabase, ref, get };
