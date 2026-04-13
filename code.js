@@ -71,6 +71,33 @@ resetBtn.addEventListener("click", resetGame);
 // =====================
 // AUTH
 // =====================
+
+const leaderboardPage = document.getElementById("leaderboard");
+
+function startLeaderboardListener() {
+    const usersRef = ref(db, "users");
+
+    onValue(usersRef, (snapshot) => {
+        if (!snapshot.exists()) return;
+
+        const users = snapshot.val();
+
+        // Convert to array
+        const usersArray = Object.entries(users).map(([id, user]) => ({
+            id,
+            username: user.username,
+            score: user.score,
+        }));
+
+        // Sort by score (highest first)
+        usersArray.sort((a, b) => b.score - a.score);
+
+        renderLeaderboard(usersArray);
+    });
+}
+
+
+
 function checkIfUserIsLoggedIn() {
     const userKey = localStorage.getItem("id");
 

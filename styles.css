@@ -1,8 +1,21 @@
+.menu-page {
+  margin: 0 auto 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .game-page {
   margin: auto;
   display: none;
   flex-direction: column;
   max-width: 500px;
+}
+
+.leaderboard-menu {
+  border: 1px solid black;
+  width: 80%;
+  height: 200px;
+  overflow-y: auto;
 }
 
 .game-over-page {
