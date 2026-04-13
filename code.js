@@ -5,6 +5,8 @@ import {
   getDatabase,
   ref,
   get,
+  set,
+  push,
 } from "./firebase.js";
 
 const app = initializeApp(firebaseConfig);
@@ -23,6 +25,8 @@ const signUpPopUp = document.getElementById("sign-up-pop-up");
 
 const scoreScreen = document.getElementById("score-screen");
 const gameContainer = document.getElementById("game-container");
+
+const createAccountBtn = document.getElementById("create-account-btn");
 const startGameBtn = document.getElementById("start-game-btn");
 
 const usernameInput = document.getElementById("username");
@@ -44,22 +48,24 @@ const gameState = {
   selectedBox: null,
 };
 
-const account = {
-  username: "",
-  password: "",
-};
-
 // =====================
 // EVENT LISTENERS
 // =====================
 startGameBtn.addEventListener("click", initializeGame);
-document.addEventListener("DOMContentLoaded", () => {
-  signUpPopUp.showModal();
-});
+document.addEventListener("DOMContentLoaded", checkIfUserIsLoggedIn);
+createAccountBtn.addEventListener("click", createAccount);
 
 // =====================
 // Create Account
 // =====================
+function checkIfUserIsLoggedIn() {
+  const userKey = localStorage.getItem("id");
+
+  if (userKey == null) {
+    signUpPopUp.showModal();
+  }
+}
+
 function createAccount() {
   if (username.value == "") {
     error.innerText = "Username is empty.";
@@ -72,11 +78,15 @@ function createAccount() {
   } else if (username.value.includes(" ") || password.value.includes(" ")) {
     error.innerText = "Username or password contains spaces";
   } else {
-    account.username = username.value;
-    account.password = password.value;
-  }
+    const newUser = push(ref(db, "users"));
+    localStorage.setItem("id", newUser.key);
 
-  console.log(account);
+    set(newUser, {
+      username: username.value,
+      password: password.value,
+      score: null,
+    });
+  }
 }
 
 // =====================
