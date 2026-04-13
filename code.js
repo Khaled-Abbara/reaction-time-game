@@ -28,10 +28,14 @@ const gameContainer = document.getElementById("game-container");
 
 const createAccountBtn = document.getElementById("create-account-btn");
 const startGameBtn = document.getElementById("start-game-btn");
+const loginStateBtn = document.getElementById("login-state-btn");
 
+const accountHeader = document.getElementById("account-header");
 const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const error = document.getElementById("error");
+
+const isLogin = false;
 
 const COLORS = {
   active: "red",
@@ -51,13 +55,25 @@ const gameState = {
 // =====================
 // EVENT LISTENERS
 // =====================
-startGameBtn.addEventListener("click", initializeGame);
 checkIfUserIsLoggedIn();
+startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
+loginStateBtn.addEventListener("click", toggleAccountPopupContent);
 
 // =====================
 // Create Account
 // =====================
+
+function toggleAccountPopupContent() {
+  isLogin = !isLogin;
+
+  if (isLogin == true) {
+    accountHeader.innerText = "Create an Account";
+  } else {
+    accountHeader.innerText = "Login";
+  }
+}
+
 function checkIfUserIsLoggedIn() {
   const userKey = localStorage.getItem("id");
   console.log(userKey);
