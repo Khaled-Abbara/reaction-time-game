@@ -4,6 +4,14 @@
   flex-direction: column;
   max-width: 500px;
 }
+
+.game-over-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 500px;
+}
+
 #game-container {
   display: grid;
   place-items: center;

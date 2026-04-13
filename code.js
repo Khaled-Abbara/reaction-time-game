@@ -1,4 +1,6 @@
-// Initialize Firebase
+// =====================
+// Firebase
+// =====================
 import {
   firebaseConfig,
   initializeApp,
@@ -12,12 +14,8 @@ import {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-get(ref(db, "users")).then((snap) => {
-  console.log(snap.val());
-});
-
 // =====================
-// SETUP / CONSTANTS
+// DOM
 // =====================
 const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
@@ -35,7 +33,10 @@ const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const error = document.getElementById("error");
 
-const isLogin = false;
+// =====================
+// STATE
+// =====================
+let isLogin = false;
 
 const COLORS = {
   active: "red",
@@ -53,65 +54,103 @@ const gameState = {
 };
 
 // =====================
-// EVENT LISTENERS
+// INIT
 // =====================
 checkIfUserIsLoggedIn();
+
 startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
 loginStateBtn.addEventListener("click", toggleAccountPopupContent);
 
 // =====================
-// Create Account
+// AUTH
 // =====================
-
-function toggleAccountPopupContent() {
-  isLogin = !isLogin;
-
-  if (isLogin == true) {
-    accountHeader.innerText = "Create an Account";
-  } else {
-    accountHeader.innerText = "Login";
-  }
-}
-
 function checkIfUserIsLoggedIn() {
   const userKey = localStorage.getItem("id");
-  console.log(userKey);
 
-  if (userKey == null) {
+  if (!userKey) {
     signUpPopUp.showModal();
   } else {
     signUpPopUp.close();
   }
 }
 
-function createAccount() {
-  if (username.value == "") {
-    error.innerText = "Username is empty.";
-  } else if (password.value == "") {
-    error.innerText = "Password is empty.";
-  } else if (username.value.length < 5) {
-    error.innerText = "Username should be more than 5 characters";
-  } else if (password.value.length < 5) {
-    error.innerText = "Password should be more than 5 characters";
-  } else if (username.value.includes(" ") || password.value.includes(" ")) {
-    error.innerText = "Username or password contains spaces";
+// Toggle login/register mode
+function toggleAccountPopupContent() {
+  isLogin = !isLogin;
+
+  if (isLogin) {
+    accountHeader.innerText = "Login";
+    createAccountBtn.innerText = "Login";
   } else {
-    const newUser = push(ref(db, "users"));
-    localStorage.setItem("id", newUser.key);
-
-    set(newUser, {
-      username: username.value,
-      password: password.value,
-      score: null,
-    });
-
-    signUpPopUp.close();
+    accountHeader.innerText = "Create an Account";
+    createAccountBtn.innerText = "Create Account";
   }
+
+  error.innerText = "";
+}
+
+// Main button handler (decides login vs register)
+async function createAccount() {
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+
+  // validation
+  if (!username) return (error.innerText = "Username is empty.");
+  if (!password) return (error.innerText = "Password is empty.");
+  if (username.length < 5)
+    return (error.innerText = "Username must be 5+ characters");
+  if (password.length < 5)
+    return (error.innerText = "Password must be 5+ characters");
+  if (username.includes(" ") || password.includes(" "))
+    return (error.innerText = "No spaces allowed");
+
+  // LOGIN FLOW
+  if (isLogin) {
+    return loginUser(username, password);
+  }
+
+  // REGISTER FLOW
+  const newUser = push(ref(db, "users"));
+
+  await set(newUser, {
+    username,
+    password,
+    score: 0,
+  });
+
+  localStorage.setItem("id", newUser.key);
+  signUpPopUp.close();
+}
+
+// LOGIN FUNCTION
+async function loginUser(username, password) {
+  const snapshot = await get(ref(db, "users"));
+
+  if (!snapshot.exists()) {
+    error.innerText = "No users found";
+    return;
+  }
+
+  const users = snapshot.val();
+
+  const foundUser = Object.entries(users).find(
+    ([key, user]) => user.username === username && user.password === password,
+  );
+
+  if (!foundUser) {
+    error.innerText = "Wrong username or password";
+    return;
+  }
+
+  const [userKey] = foundUser;
+
+  localStorage.setItem("id", userKey);
+  signUpPopUp.close();
 }
 
 // =====================
-// CORE GAME FLOW
+// GAME
 // =====================
 function initializeGame() {
   menuPage.style.display = "none";
@@ -129,21 +168,16 @@ function gameLoop() {
   startTimer();
 }
 
-function gameOver() {
-  // gamePage.style.display = "none";
-  // clearGameState();
-  // alert("Game over!!");
-}
-
 // =====================
-// GAME MECHANICS
+// GAME LOGIC
 // =====================
 function createBoxes() {
   gameContainer.innerHTML = "";
+  gameState.boxes = [];
 
-  for (let c = 0; c < gameState.maxBoxCount; c++) {
+  for (let i = 0; i < gameState.maxBoxCount; i++) {
     const box = document.createElement("div");
-    box.id = c;
+    box.id = i;
 
     gameContainer.appendChild(box);
     gameState.boxes.push(box);
@@ -171,7 +205,7 @@ function handleClick() {
       gameState.selectedBox.style.backgroundColor = COLORS.success;
 
       setTimeout(() => {
-        deSelectRandomBox();
+        deSelectBox();
         gameLoop();
       }, 100);
     },
@@ -185,31 +219,22 @@ function startTimer() {
   }, gameState.time);
 }
 
+function gameOver() {
+  alert("Game Over");
+}
+
 // =====================
-// HELPERS / CLEANUP
+// HELPERS
 // =====================
-function deSelectRandomBox() {
+function deSelectBox() {
   gameState.selectedBox.style.backgroundColor = COLORS.default;
   gameState.selectedBox = null;
 }
 
-function clearGameState() {
-  gameState.score = -1;
-  gameState.boxes = [];
-  gameState.countDown = null;
-  gameState.selectedBox = null;
-}
-
 function decreaseTime() {
-  if (gameState.score <= 8) {
-    gameState.time -= 50;
-  } else if (gameState.score <= 16) {
-    gameState.time -= 40;
-  } else if (gameState.score <= 24) {
-    gameState.time -= 30;
-  } else if (gameState.score <= 32) {
-    gameState.time -= 20;
-  } else if (gameState.time > 260) {
-    gameState.time -= 10;
-  }
+  if (gameState.score <= 8) gameState.time -= 50;
+  else if (gameState.score <= 16) gameState.time -= 40;
+  else if (gameState.score <= 24) gameState.time -= 30;
+  else if (gameState.score <= 32) gameState.time -= 20;
+  else if (gameState.time > 260) gameState.time -= 10;
 }
