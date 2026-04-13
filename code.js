@@ -9,6 +9,7 @@ import {
     get,
     set,
     push,
+    update
 } from "./firebase.js";
 
 const app = initializeApp(firebaseConfig);
@@ -242,8 +243,7 @@ async function gameOver() {
     const oldTopScore = snapshot.val().score;
 
     if (gameState.score > oldTopScore) {
-        set(ref(db, "users/" + userKey), {
-            ...userData,
+        await update(ref(db, "users/" + userKey), {
             score: gameState.score,
         })
     }

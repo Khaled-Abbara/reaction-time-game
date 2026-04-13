@@ -5,6 +5,8 @@ import { ref } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-databas
 import { get } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 import { push } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { update } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,4 +25,4 @@ const firebaseConfig = {
   measurementId: "G-HZB097HP7H",
 };
 
-export { firebaseConfig, initializeApp, getDatabase, ref, get, set, push };
+export { firebaseConfig, initializeApp, getDatabase, ref, get, set, push, update };
