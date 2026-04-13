@@ -9,7 +9,8 @@ import {
     get,
     set,
     push,
-    update
+    update,
+    onValue
 } from "./firebase.js";
 
 const app = initializeApp(firebaseConfig);
