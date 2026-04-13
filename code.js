@@ -23,6 +23,7 @@ const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
 const signUpPopUp = document.getElementById("sign-up-pop-up");
 const gameOverPage = document.getElementById("game-over-page");
+const leaderboardMenu = document.getElementById("leaderboard-menu");
 
 const scoreScreen = document.getElementById("score-screen");
 const gameOverScoreScreen = document.getElementById("game-over-score-screen");
@@ -37,6 +38,15 @@ const accountHeader = document.getElementById("account-header");
 const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const error = document.getElementById("error");
+
+// =====================
+// SOUNDS
+// =====================
+
+const tick1 = new Audio("assets/block-1.mp3")
+const tick2 = new Audio("assets/block-2.mp3")
+const success = new Audio("assets/success-chime.mp3")
+
 
 // =====================
 // STATE
@@ -62,6 +72,7 @@ const gameState = {
 // INIT
 // =====================
 checkIfUserIsLoggedIn();
+startLeaderboardListener();
 
 startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
@@ -72,7 +83,7 @@ resetBtn.addEventListener("click", resetGame);
 // AUTH
 // =====================
 
-const leaderboardPage = document.getElementById("leaderboard");
+
 
 function startLeaderboardListener() {
     const usersRef = ref(db, "users");
@@ -96,6 +107,17 @@ function startLeaderboardListener() {
     });
 }
 
+function renderLeaderboard(users) {
+    leaderboardMenu.innerHTML = '';
+
+    users.slice(0, 10).forEach((user, index) => {
+        const div = document.createElement("div");
+
+        div.innerText = `${index + 1}. ${user.username} - ${user.score}`;
+
+        leaderboardMenu.appendChild(div);
+    });
+}
 
 
 function checkIfUserIsLoggedIn() {
@@ -244,6 +266,7 @@ function handleClick() {
         () => {
             clearTimeout(gameState.countDown);
             gameState.selectedBox.style.backgroundColor = COLORS.success;
+            tick2.play();
 
             setTimeout(() => {
                 deSelectBox();
@@ -255,6 +278,7 @@ function handleClick() {
 }
 
 function startTimer() {
+    tick1.play()
     gameState.countDown = setTimeout(() => {
         gameOver();
     }, gameState.time);

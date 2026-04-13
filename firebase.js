@@ -1,15 +1,12 @@
 // Import the functions you need from the SDKs you need
-import {
-  firebaseConfig,
-  initializeApp,
-  getDatabase,
-  ref,
-  get,
-  set,
-  push,
-  update,
-  onValue
-} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { ref } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { get } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { set } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { push } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { update } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
+import { onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-database.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
