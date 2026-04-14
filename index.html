@@ -5,37 +5,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-  <title>Document</title>
+  <title>Game</title>
 </head>
 
 <body>
   <main class="menu-page" id="menu-page">
-    <h1>game logo</h1>
+    <h1>🎮 Game Logo</h1>
     <button id="start-game-btn">Start</button>
-    <button id="tutorial">How to play</button>
+    <button id="tutorial">How to play?</button>
 
+    <h4>Leaderboard</h4>
     <section id="leaderboard-menu"></section>
   </main>
-
-
 
   <dialog id="sign-up-pop-up">
     <div>
       <h2 style="text-align: center;" id="account-header">Create an Account</h2>
-      <input id="username" placeholder="choose a simple name" />
-      <input id="password" placeholder="choose a simple password" />
-      <button id="create-account-btn">submit</button>
+      <input id="username" placeholder="👤 choose a simple name" />
+      <input id="password" placeholder="🔒 choose a simple password" />
+      <button id="create-account-btn">Submit</button>
       <button id="login-state-btn">Have an account?.. login</button>
-      <p style="text-align: center;">Note: screenshot your password for easy future login</p>
+      <p style="text-align: center;">📸 Screenshot your password for easy login</p>
       <p id="error"></p>
     </div>
   </dialog>
 
   <main class="game-over-page" id="game-over-page">
-    <h1>GAME OVER</h1>
-    <h2>Score:</h2>
-    <h2 id="game-over-score-screen"></h2>
-    <button id="reset-btn">reset</button>
+    <h1>💀 GAME OVER</h1>
+    <span>
+      <h2>🏆 Score:</h2>
+      <h1 style="text-align: center" id="game-over-score-screen"></h1>
+    </span>
+    <h4 id="game-over-message"></h4>
+    <button id="reset-btn">Main Menu</button>
   </main>
 
   <main class="game-page" id="game-page">

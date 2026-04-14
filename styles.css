@@ -10,6 +10,18 @@ body {
   min-height: 100vh;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+}
+
 .menu-page,
 .game-page,
 .game-over-page {
@@ -111,4 +123,34 @@ input {
 #error {
   color: #ff4d4d;
   font-size: 0.85rem;
+}
+
+/* -------------- */
+
+#game-over-message {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+
+  background: linear-gradient(90deg, #ffd54a, #ffb300, #fff176, #ff8f00);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

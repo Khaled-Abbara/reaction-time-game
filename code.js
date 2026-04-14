@@ -74,6 +74,7 @@ const gameState = {
 checkIfUserIsLoggedIn();
 startLeaderboardListener();
 
+window.addEventListener("load", loadMessages);
 startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
 loginStateBtn.addEventListener("click", toggleAccountPopupContent);
@@ -113,7 +114,18 @@ function renderLeaderboard(users) {
     users.slice(0, 10).forEach((user, index) => {
         const div = document.createElement("div");
 
-        div.innerText = `${index + 1}. ${user.username} - ${user.score}`;
+        let medal = "";
+        if (index === 0) medal = "🥇 ";
+        else if (index === 1) medal = "🥈 ";
+        else if (index === 2) medal = "🥉 ";
+
+        div.innerText = `${medal}${index + 1}. ${user.username} - ${user.score}`;
+
+        // extra emphasis styling
+        if (index < 3) {
+            div.style.fontWeight = "bold";
+            div.style.fontSize = "1rem";
+        }
 
         leaderboardMenu.appendChild(div);
     });
@@ -295,6 +307,10 @@ async function gameOver() {
     gameOverScoreScreen.innerText = gameState.score;
     success.play();
 
+    const message = await getRandomGameOverMessage();
+    document.getElementById("game-over-message").innerText = message;
+
+
     const userKey = localStorage.getItem("id");
     const snapshot = await get(ref(db, "users/" + userKey));
     const oldTopScore = snapshot.val().score;
@@ -329,3 +345,19 @@ function clearGameState() {
     gameState.countDown = null;
     gameState.selectedBox = null;
 }
+
+let messages = [];
+
+async function loadMessages() {
+    const res = await fetch("./messages.json");
+    const data = await res.json();
+    messages = data.messages;
+}
+
+async function getRandomGameOverMessage() {
+    const index = Math.floor(Math.random() * messages.length);
+    console.log(messages[index])
+    return messages[index];
+}
+
+
