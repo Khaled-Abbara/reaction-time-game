@@ -23,6 +23,7 @@ const menuPage = document.getElementById("menu-page");
 const gamePage = document.getElementById("game-page");
 const signUpPopUp = document.getElementById("sign-up-pop-up");
 const gameOverPage = document.getElementById("game-over-page");
+const howToPlayPage = document.getElementById("how-to-play-page");
 const leaderboardMenu = document.getElementById("leaderboard-menu");
 
 const scoreScreen = document.getElementById("score-screen");
@@ -33,6 +34,8 @@ const createAccountBtn = document.getElementById("create-account-btn");
 const startGameBtn = document.getElementById("start-game-btn");
 const resetBtn = document.getElementById("reset-btn");
 const loginStateBtn = document.getElementById("login-state-btn");
+const tutorialBtn = document.getElementById("tutorial-btn");
+const goBackBtn = document.getElementById("go-back-btn");
 
 const accountHeader = document.getElementById("account-header");
 const usernameInput = document.getElementById("username");
@@ -79,12 +82,17 @@ startGameBtn.addEventListener("click", initializeGame);
 createAccountBtn.addEventListener("click", createAccount);
 loginStateBtn.addEventListener("click", toggleAccountPopupContent);
 resetBtn.addEventListener("click", resetGame);
+tutorialBtn.addEventListener("click", showTutorial);
+goBackBtn.addEventListener("click", resetGame)
 
 // =====================
 // AUTH
 // =====================
 
-
+function showTutorial() {
+    howToPlayPage.style.display = "flex";
+    menuPage.style.display = "none";
+}
 
 function startLeaderboardListener() {
     const usersRef = ref(db, "users");
@@ -111,24 +119,31 @@ function startLeaderboardListener() {
 function renderLeaderboard(users) {
     leaderboardMenu.innerHTML = '';
 
-    users.slice(0, 10).forEach((user, index) => {
-        const div = document.createElement("div");
+    let previousScore = null;
+    let rank = 0;
+    let displayCount = 0;
 
-        let medal = "";
-        if (index === 0) medal = "🥇 ";
-        else if (index === 1) medal = "🥈 ";
-        else if (index === 2) medal = "🥉 ";
+    for (let i = 0; i < users.length && displayCount < 10; i++) {
+        const user = users[i];
 
-        div.innerText = `${medal}${index + 1}. ${user.username} - ${user.score}`;
-
-        // extra emphasis styling
-        if (index < 3) {
-            div.style.fontWeight = "bold";
-            div.style.fontSize = "1rem";
+        // Increase rank only when score changes (dense ranking)
+        if (user.score !== previousScore) {
+            rank++;
+            previousScore = user.score;
         }
 
+        const div = document.createElement("div");
+
+        if (rank === 1) div.classList.add("first");
+        else if (rank === 2) div.classList.add("second");
+        else if (rank === 3) div.classList.add("third");
+
+        div.innerHTML = `<span>${rank}. ${user.username}</span><span>${user.score}</span>`;
+
         leaderboardMenu.appendChild(div);
-    });
+
+        displayCount++;
+    }
 }
 
 
@@ -226,6 +241,7 @@ function resetGame() {
     menuPage.style.display = "flex";
     gamePage.style.display = "none";
     gameOverPage.style.display = "none";
+    howToPlayPage.style.display = "none";
 
     clearGameState();
 }

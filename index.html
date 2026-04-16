@@ -10,9 +10,13 @@
 
 <body>
   <main class="menu-page" id="menu-page">
-    <h1>🎮 Game Logo</h1>
+    <div>
+      <h1 class="logo">BlazeTap 🔥</h1>
+      <p style="font-size: 0.8rem">By: Khaled - v2.0</p>
+    </div>
+    <!-- <img src="assets/game-logo.png" width="60%" style="max-width: 30rem;"> -->
     <button id="start-game-btn">Start</button>
-    <button id="tutorial">How to play?</button>
+    <button id="tutorial-btn">How to play?</button>
 
     <h4>Leaderboard</h4>
     <section id="leaderboard-menu"></section>
@@ -29,6 +33,22 @@
       <p id="error"></p>
     </div>
   </dialog>
+
+  <main id="how-to-play-page">
+    <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
+
+    <ul>
+      <li>When the game starts, a grid of boxes appears.</li>
+      <li>One box is highlighted in red each round.</li>
+      <li>You must click the red box before the timer runs out.</li>
+      <li>Each successful click increases your score and immediately starts the next round.</li>
+      <li>The time allowed decreases as your score gets higher, making the game progressively faster.</li>
+      <li>If you fail to click the highlighted box in time, the game ends.</li>
+      <li>Your top score is shown and can be saved to a leaderboard.</li>
+    </ul>
+
+    <button id="go-back-btn">Go back</button>
+  </main>
 
   <main class="game-over-page" id="game-over-page">
     <h1>💀 GAME OVER</h1>
