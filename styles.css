@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 8rem;
+  padding-top: 5rem;
   min-height: 100vh;
 }
 
@@ -37,6 +37,8 @@ body {
   width: 100%;
   padding: 1rem;
 }
+
+
 
 .game-page,
 .game-over-page {
@@ -72,6 +74,12 @@ button:active {
   border-radius: 6px;
   padding: 0.5em;
   font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  #leaderboard-menu {
+    height: 45vh;
+  }
 }
 
 #leaderboard-menu div {
@@ -170,8 +178,6 @@ input {
 
   font-size: 1rem;
 }
-
-
 
 .menu-page h4 {
   margin-bottom: -0.6rem;
@@ -294,7 +300,7 @@ button:active {
   border-radius: 8px;
 
   padding: 0.8rem;
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #e6e6e6;
   line-height: 1.2;
 
