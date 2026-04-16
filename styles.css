@@ -78,7 +78,7 @@ button:active {
 
 @media (max-width: 600px) {
   #leaderboard-menu {
-    height: 45vh;
+    height: 30vh;
   }
 }
 
