@@ -253,6 +253,7 @@ button:active {
 
 /* --------------------------------- */
 
+
 #how-to-play-page {
   display: none;
   flex-direction: column;
@@ -270,6 +271,12 @@ button:active {
   border-radius: 10px;
 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+  #how-to-play-page {
+    max-width: 45rem;
+  }
 }
 
 /* Title / intro text */
