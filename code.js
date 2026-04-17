@@ -347,8 +347,8 @@ function deSelectBox() {
 }
 
 function decreaseTime() {
-    if (gameState.score <= 8) gameState.time -= 50;
-    else if (gameState.score <= 16) gameState.time -= 40;
+    if (gameState.score <= 8) gameState.time -= 40;
+    else if (gameState.score <= 16) gameState.time -= 30;
     else if (gameState.score <= 24) gameState.time -= 30;
     else if (gameState.score <= 32) gameState.time -= 20;
     else if (gameState.time > 260) gameState.time -= 10;
