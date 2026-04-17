@@ -123,7 +123,7 @@ function renderLeaderboard(users) {
     let rank = 0;
     let displayCount = 0;
 
-    for (let i = 0; i < users.length && displayCount < 10; i++) {
+    for (let i = 0; i < users.length && displayCount < 100; i++) {
         const user = users[i];
 
         // Increase rank only when score changes (dense ranking)
