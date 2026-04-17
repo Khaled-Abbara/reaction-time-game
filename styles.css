@@ -142,7 +142,7 @@ input {
 
 #game-over-message {
   margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-align: center;
 
   background: linear-gradient(90deg, #ffd54a, #ffb300, #fff176, #ff8f00);
