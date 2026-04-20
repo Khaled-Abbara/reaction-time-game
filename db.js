@@ -8,7 +8,7 @@ import {
   push,
   update,
   onValue,
-} from "./legacy/firebase.js";
+} from "./firebase.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);

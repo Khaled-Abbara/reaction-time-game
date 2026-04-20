@@ -1,53 +1,15 @@
 // =====================
 // Firebase & Auth Imports
 // =====================
-import {
-  firebaseConfig,
-  initializeApp,
-  getDatabase,
-  ref,
-  update,
-  onValue,
-} from "./legacy/firebase.js";
+import { firebaseConfig, initializeApp, getDatabase, ref, update, onValue } from "./firebase.js";
 
 import { getSpecificUser, getUsers, setNewUser } from "./db.js";
 
+import { UI } from "./Ui-tree.js";
+import { sfx } from "./sfx.js";
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
-// =====================
-// UI TREE (The "Face")
-// =====================
-const UI = {
-  pages: {
-    menu: document.getElementById("menu-page"),
-    game: document.getElementById("game-page"),
-    gameOver: document.getElementById("game-over-page"),
-    tutorial: document.getElementById("how-to-play-page"),
-    signUp: document.getElementById("sign-up-pop-up"), // <dialog>
-  },
-  buttons: {
-    start: document.getElementById("start-game-btn"),
-    reset: document.getElementById("reset-btn"),
-    goBack: document.getElementById("go-back-btn"),
-    tutorial: document.getElementById("tutorial-btn"),
-    createAccount: document.getElementById("create-account-btn"),
-    loginToggle: document.getElementById("login-state-btn"),
-  },
-  game: {
-    container: document.getElementById("game-container"),
-    score: document.getElementById("score-screen"),
-    finalScore: document.getElementById("game-over-score-screen"),
-    message: document.getElementById("game-over-message"),
-    leaderboard: document.getElementById("leaderboard-menu"),
-  },
-  auth: {
-    header: document.getElementById("account-header"),
-    username: document.getElementById("username"),
-    password: document.getElementById("password"),
-    error: document.getElementById("error"),
-  },
-};
 
 // =====================
 // STATE & CONSTANTS
@@ -73,9 +35,6 @@ const gameState = {
 // =====================
 // SOUNDS
 // =====================
-const tick1 = new Audio("assets/block-1.mp3");
-const tick2 = new Audio("assets/block-2.mp3");
-const successSfx = new Audio("assets/success-chime.mp3");
 
 // =====================
 // INITIALIZATION

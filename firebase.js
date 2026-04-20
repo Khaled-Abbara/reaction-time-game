@@ -16,8 +16,7 @@ import { onValue } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-dat
 const firebaseConfig = {
   apiKey: "AIzaSyDMcOgQeIhymv86NsISdP1WgQXPh19D_Hc",
   authDomain: "reaction-game-6ba73.firebaseapp.com",
-  databaseURL:
-    "https://reaction-game-6ba73-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "https://reaction-game-6ba73-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "reaction-game-6ba73",
   storageBucket: "reaction-game-6ba73.firebasestorage.app",
   messagingSenderId: "762088583051",
