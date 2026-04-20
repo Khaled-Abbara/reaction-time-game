@@ -1,72 +1,83 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>BlazeTap</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon_logo.svg" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
-  <title>BlazeTap</title>
-  <link rel="icon" type="image/x-icon" href="assets/favicon_logo.svg">
+  <body>
+    <main class="menu-page" id="menu-page">
+      <div>
+        <h1 class="logo">BlazeTap 🔥</h1>
+        <p style="font-size: 0.8rem">By: Khaled - v2.2</p>
+      </div>
+      <!-- <img src="assets/game-logo.png" width="60%" style="max-width: 30rem;"> -->
+      <button id="start-game-btn">Start</button>
+      <button id="tutorial-btn">How to play?</button>
 
-</head>
+      <h4>Leaderboard</h4>
+      <section id="leaderboard-menu"></section>
+    </main>
 
-<body>
-  <main class="menu-page" id="menu-page">
-    <div>
-      <h1 class="logo">BlazeTap 🔥</h1>
-      <p style="font-size: 0.8rem">By: Khaled - v2.1</p>
-    </div>
-    <!-- <img src="assets/game-logo.png" width="60%" style="max-width: 30rem;"> -->
-    <button id="start-game-btn">Start</button>
-    <button id="tutorial-btn">How to play?</button>
+    <dialog id="sign-up-pop-up">
+      <div>
+        <h2 style="text-align: center" id="account-header">
+          Create an Account
+        </h2>
+        <input id="username" placeholder="👤 choose a simple name" />
+        <input id="password" placeholder="🔒 choose a simple password" />
+        <button id="create-account-btn">Submit</button>
+        <button id="login-state-btn">Have an account?.. login</button>
+        <p style="text-align: center">
+          📸 Screenshot your password for easy login
+        </p>
+        <p id="error"></p>
+      </div>
+    </dialog>
 
-    <h4>Leaderboard</h4>
-    <section id="leaderboard-menu"></section>
-  </main>
+    <main id="how-to-play-page">
+      <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
 
-  <dialog id="sign-up-pop-up">
-    <div>
-      <h2 style="text-align: center;" id="account-header">Create an Account</h2>
-      <input id="username" placeholder="👤 choose a simple name" />
-      <input id="password" placeholder="🔒 choose a simple password" />
-      <button id="create-account-btn">Submit</button>
-      <button id="login-state-btn">Have an account?.. login</button>
-      <p style="text-align: center;">📸 Screenshot your password for easy login</p>
-      <p id="error"></p>
-    </div>
-  </dialog>
+      <ul>
+        <li>When the game starts, a grid of boxes appears.</li>
+        <li>
+          You must click the highlighted red box before the timer runs out.
+        </li>
+        <li>
+          Each successful click increases your score and immediately starts the
+          next round.
+        </li>
+        <li>
+          The time allowed decreases as your score gets higher, making the game
+          harder.
+        </li>
+        <li>
+          If you fail to click the highlighted box in time, the game ends.
+        </li>
+        <li>Your top score is shown and can be saved to a leaderboard.</li>
+      </ul>
 
-  <main id="how-to-play-page">
-    <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
+      <button id="go-back-btn">Go back</button>
+    </main>
 
-    <ul>
-      <li>When the game starts, a grid of boxes appears.</li>
-      <li>You must click the highlighted red box before the timer runs out.</li>
-      <li>Each successful click increases your score and immediately starts the next round.</li>
-      <li>The time allowed decreases as your score gets higher, making the game harder.</li>
-      <li>If you fail to click the highlighted box in time, the game ends.</li>
-      <li>Your top score is shown and can be saved to a leaderboard.</li>
-    </ul>
+    <main class="game-over-page" id="game-over-page">
+      <h1>💀 GAME OVER</h1>
+      <span>
+        <h2>🏆 Score:</h2>
+        <h1 style="text-align: center" id="game-over-score-screen"></h1>
+      </span>
+      <h4 id="game-over-message"></h4>
+      <button id="reset-btn">Main Menu</button>
+    </main>
 
-    <button id="go-back-btn">Go back</button>
-  </main>
+    <main class="game-page" id="game-page">
+      <h1 id="score-screen">0</h1>
+      <section id="game-container"></section>
+    </main>
 
-  <main class="game-over-page" id="game-over-page">
-    <h1>💀 GAME OVER</h1>
-    <span>
-      <h2>🏆 Score:</h2>
-      <h1 style="text-align: center" id="game-over-score-screen"></h1>
-    </span>
-    <h4 id="game-over-message"></h4>
-    <button id="reset-btn">Main Menu</button>
-  </main>
-
-  <main class="game-page" id="game-page">
-    <h1 id="score-screen">0</h1>
-    <section id="game-container"></section>
-  </main>
-
-  <script type="module" src="code.js" defer></script>
-</body>
-
+    <script type="module" src="code.js" defer></script>
+  </body>
 </html>
