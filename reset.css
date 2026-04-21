@@ -1,0 +1,101 @@
+/* =========================
+   CSS Reset (Tailwind-like)
+========================= */
+
+/* 1. Box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Remove default margin/padding */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. Base document settings */
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    scroll-behavior: smooth;
+}
+
+/* 4. Body defaults */
+body {
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    line-height: inherit;
+    color: inherit;
+    background-color: var(--color-light, #fff);
+}
+
+/* 5. Typography resets */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+input,
+textarea {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* 6. Lists */
+ol,
+ul {
+    list-style: none;
+}
+
+/* 7. Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 8. Images and media */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 9. Forms */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Remove button default styles */
+button {
+    cursor: pointer;
+}
+
+/* 10. Tables */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 11. Hidden attribute */
+[hidden] {
+    display: none !important;
+}

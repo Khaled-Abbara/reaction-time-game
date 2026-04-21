@@ -1,0 +1,7 @@
+.box {
+    height: 7rem;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-radius: 6px;
+}

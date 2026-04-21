@@ -4,69 +4,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
   <title>BlazeTap</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon_logo.svg">
+  <link href="root.css" rel="stylesheet">
+  <link href="custom.css" rel="stylesheet">
+
+  <script type="module" src="components/start-page.js"></script>
+  <script type="module" src="game.js"></script>
 
 </head>
 
 <body>
-  <main class="menu-page" id="menu-page">
-    <div>
-      <h1 class="logo">BlazeTap 🔥</h1>
-      <p style="font-size: 0.8rem">By: Khaled - v2.1</p>
-    </div>
-    <!-- <img src="assets/game-logo.png" width="60%" style="max-width: 30rem;"> -->
-    <button id="start-game-btn">Start</button>
-    <button id="tutorial-btn">How to play?</button>
+  <start-page></start-page>
 
-    <h4>Leaderboard</h4>
-    <section id="leaderboard-menu"></section>
-  </main>
-
-  <dialog id="sign-up-pop-up">
-    <div>
-      <h2 style="text-align: center;" id="account-header">Create an Account</h2>
-      <input id="username" placeholder="👤 choose a simple name" />
-      <input id="password" placeholder="🔒 choose a simple password" />
-      <button id="create-account-btn">Submit</button>
-      <button id="login-state-btn">Have an account?.. login</button>
-      <p style="text-align: center;">📸 Screenshot your password for easy login</p>
-      <p id="error"></p>
-    </div>
-  </dialog>
-
-  <main id="how-to-play-page">
-    <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
-
-    <ul>
-      <li>When the game starts, a grid of boxes appears.</li>
-      <li>You must click the highlighted red box before the timer runs out.</li>
-      <li>Each successful click increases your score and immediately starts the next round.</li>
-      <li>The time allowed decreases as your score gets higher, making the game harder.</li>
-      <li>If you fail to click the highlighted box in time, the game ends.</li>
-      <li>Your top score is shown and can be saved to a leaderboard.</li>
-    </ul>
-
-    <button id="go-back-btn">Go back</button>
-  </main>
-
-  <main class="game-over-page" id="game-over-page">
-    <h1>💀 GAME OVER</h1>
-    <span>
-      <h2>🏆 Score:</h2>
-      <h1 style="text-align: center" id="game-over-score-screen"></h1>
-    </span>
-    <h4 id="game-over-message"></h4>
-    <button id="reset-btn">Main Menu</button>
-  </main>
-
-  <main class="game-page" id="game-page">
-    <h1 id="score-screen">0</h1>
-    <section id="game-container"></section>
-  </main>
-
-  <script type="module" src="code.js" defer></script>
+  <!-- <main id="" class="">
+    <h1 id="">0</h1>
+    <section id=""></section>
+  </main> -->
 </body>
 
 </html>
+<!-- <section class="grid grid-cols-3 gap-2">
+  <div class="box" id="1"></div>
+  <div class="box" id="2"></div>
+  <div class="box" id="3"></div>
+  <div class="box" id="4"></div>
+  <div class="box" id="5"></div>
+  <div class="box" id="6"></div>
+  <div class="box" id="7"></div>
+  <div class="box" id="8"></div>
+  <div class="box" id="9"></div>
+</section> -->
+
+<!-- <section class="flex flex-col border shadow-md rounded-md p-2">
+  <div class="flex flex-1 justify-between px-6 gap-2 border">
+    <p>rank</p>
+    <p>user</p>
+    <p>attempts</p>
+    <p>score</p>
+  </div>
+  <div class="flex flex-1 justify-between px-6 gap-2 border">
+    <p>rank</p>
+    <p>user</p>
+    <p>attempts</p>
+    <p>score</p>
+  </div>
+  <div class="flex flex-1 justify-between px-6 gap-2 border">
+    <p>rank</p>
+    <p>user</p>
+    <p>attempts</p>
+    <p>score</p>
+  </div>
+  <div class="flex flex-1 justify-between px-6 gap-2 border">
+    <p>rank</p>
+    <p>user</p>
+    <p>attempts</p>
+    <p>score</p>
+  </div>
+</section> -->
+
+<!-- <section id="" class="flex flex-col justify-center items-center border shadow-md border-rd-1 rounded-xl p-3">
+  <h1>💀 GAME OVER</h1>
+  <div class="flex gap-3">
+    <h2>🏆 Score:</h2>
+    <h1 id=""> 1</h1>
+  </div>
+  <h3 id="">Sample text message sample text message</h3>
+  <button id="" class="btn btn-primary">Main Menu</button>
+</section> -->
+
+
+<!-- <section class="flex flex-col justify-center items-center">
+  <ul>
+    <h3>BlazeTap 🔥 is a fast-paced reaction clicking game.</h3>
+    <li>Click the highlighted red box before time runs out.</li>
+    <li>Each hit increases your score and starts a faster round.</li>
+    <li>The higher your score, the less time you get.</li>
+    <li>Miss the box and the game ends.</li>
+    <li>Your best score can be saved to the leaderboard.</li>
+  </ul>
+  <button class="btn btn-primary">Go back</button>
+</section> -->
+
+
+
+
+
+<!-- <section id="" class="flex flex-col gap-3 border p-4 shadow-md">
+  <div class="flex flex-col gap-1">
+    <h2 id="" class="text-center">Create an Account</h2>
+    <input id="" class="input" placeholder="👤 choose a simple name" />
+    <input id="" class="input" placeholder="🔒 choose a simple password" />
+  </div>
+  <div class="flex flex-col gap-1">
+    <button id="" class="btn btn-primary">Create account</button>
+    <button id="" class="btn btn-primary">Have an account?.. login</button>
+  </div>
+  <div class="text-center">
+    <p>📸 Screenshot your password for easy login</p>
+    <p id="" class="text-danger">The name and password is empty</p>
+  </div>
+</section> -->
