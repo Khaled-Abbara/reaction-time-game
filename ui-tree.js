@@ -27,6 +27,7 @@ const UI = {
     password: document.getElementById("password"),
     error: document.getElementById("error"),
   },
+  boxes: {},
 };
 
 export { UI };

@@ -23,4 +23,8 @@ function selectRandomBox() {
   gameState.selectedBox = gameState.boxes[index];
 }
 
-export { decreaseTime, clearGameState, selectRandomBox, increaseScore };
+function deSelectRandomBox() {
+  gameState.selectedBox = null;
+}
+
+export { decreaseTime, clearGameState, selectRandomBox, increaseScore, deSelectRandomBox };

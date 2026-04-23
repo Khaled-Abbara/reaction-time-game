@@ -2,8 +2,17 @@
 // Firebase & Auth Imports
 // =====================
 import { firebaseConfig, initializeApp, getDatabase, ref, update, onValue } from "./db-firebase.js";
+import { showScore, showRandomBox, hideRandomBox } from "./ui-view.js";
+
+import {
+  decreaseTime,
+  clearGameState,
+  selectRandomBox,
+  increaseScore,
+  deSelectRandomBox,
+} from "./game-engine.js";
+
 import { getUserById, getUsers, createUser } from "./db-actions.js";
-import { decreaseTime, clearGameState, selectRandomBox, increaseScore } from "./game-engine.js";
 import { UI } from "./Ui-tree.js";
 import { sfx } from "./sfx-tree.js";
 import { gameState } from "./game-state.js";
@@ -158,20 +167,12 @@ function gameLoop() {
 function createBoxes() {
   UI.game.container.innerHTML = "";
   gameState.boxes = [];
-  for (let i = 0; i < gameState.maxBoxCount; i++) {
+  for (let i = 0; i < 10; i++) {
     const box = document.createElement("div");
     box.id = i;
     UI.game.container.appendChild(box);
     gameState.boxes.push(box);
   }
-}
-
-function showScore() {
-  UI.game.score.innerText = gameState.score;
-}
-
-function showRandomBox() {
-  gameState.selectedBox.style.backgroundColor = COLORS.active;
 }
 
 function handleClick(e) {
@@ -186,22 +187,6 @@ function handleClick(e) {
     gameOver();
   }
 }
-
-// function handleClick() {
-//   gameState.selectedBox.addEventListener(
-//     "click",
-//     () => {
-//       clearTimeout(gameState.countDown);
-//       gameState.selectedBox.style.backgroundColor = COLORS.success;
-//       sfx.tick2.play();
-//       setTimeout(() => {
-//         deSelectBox();
-//         gameLoop();
-//       }, 100);
-//     },
-//     { once: true },
-//   );
-// }
 
 function startTimer() {
   sfx.tick1.play();
@@ -226,12 +211,6 @@ async function gameOver() {
 // =====================
 // HELPERS
 // =====================
-function deSelectBox() {
-  if (gameState.selectedBox) {
-    gameState.selectedBox.style.backgroundColor = COLORS.default;
-    gameState.selectedBox = null;
-  }
-}
 
 async function loadMessages() {
   try {
