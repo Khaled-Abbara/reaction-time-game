@@ -1,8 +1,15 @@
 // =====================
 // Firebase & Auth Imports
 // =====================
-import { firebaseConfig, initializeApp, getDatabase, ref, update, onValue } from "./db-firebase.js";
-import { showScore, showRandomBox, hideRandomBox } from "./ui-view.js";
+import {
+  firebaseConfig,
+  initializeApp,
+  getDatabase,
+  ref,
+  update,
+  onValue,
+} from "./scripts/db-firebase.js";
+import { showScore, showRandomBox, hideRandomBox } from "./scripts/ui-view.js";
 
 import {
   decreaseTime,
@@ -10,12 +17,12 @@ import {
   selectRandomBox,
   increaseScore,
   deSelectRandomBox,
-} from "./game-engine.js";
+} from "./scripts/game-engine.js";
 
-import { getUserById, getUsers, createUser } from "./db-actions.js";
-import { UI } from "./Ui-tree.js";
-import { sfx } from "./sfx-tree.js";
-import { gameState } from "./game-state.js";
+import { getUserById, getUsers, createUser } from "./scripts/db-actions.js";
+import { UI } from "./scripts/Ui-tree.js";
+import { sfx } from "./scripts/sfx-tree.js";
+import { gameState } from "./scripts/game-state.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
