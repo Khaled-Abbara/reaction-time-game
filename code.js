@@ -2,7 +2,8 @@
 // Firebase & Auth Imports
 // =====================
 import { firebaseConfig, initializeApp, getDatabase, ref, update, onValue } from "./firebase.js";
-import { getSpecificUser, getUsers, setNewUser } from "./db.js";
+import { getUserById, getUsers, createUser } from "./db.js";
+import { decreaseTime, clearGameState, selectRandomBox, increaseScore } from "./game-engine.js";
 import { UI } from "./Ui-tree.js";
 import { sfx } from "./sfx.js";
 import { gameState } from "./game-state.js";
@@ -25,16 +26,18 @@ const COLORS = {
 // =====================
 // INITIALIZATION
 // =====================
-checkIfUserIsLoggedIn();
-startLeaderboardListener();
+isLoggedIn();
+setupLeaderboard();
 
 window.addEventListener("load", loadMessages);
 UI.buttons.start.addEventListener("click", initializeGame);
 UI.buttons.createAccount.addEventListener("click", createAccount);
-UI.buttons.loginToggle.addEventListener("click", toggleAccountPopupContent);
+UI.buttons.loginToggle.addEventListener("click", toggleAuthForm);
 UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
+
+UI.game.container.addEventListener("click", (e) => handleClick(e));
 
 // =====================
 // UI HELPERS
@@ -51,13 +54,13 @@ function showPage(targetPageKey) {
 // =====================
 // AUTH LOGIC
 // =====================
-function checkIfUserIsLoggedIn() {
+function isLoggedIn() {
   const userKey = localStorage.getItem("id");
   if (!userKey) UI.pages.signUp.showModal();
   else UI.pages.signUp.close();
 }
 
-function toggleAccountPopupContent() {
+function toggleAuthForm() {
   isLogin = !isLogin;
   UI.auth.header.innerText = isLogin ? "Login" : "Create an Account";
   UI.buttons.loginToggle.innerText = isLogin
@@ -78,7 +81,7 @@ async function createAccount() {
 
   if (isLogin) return loginUser(username, password);
 
-  const { success, data } = setNewUser(username, password);
+  const { success, data } = createUser(username, password);
   if (success) {
     localStorage.setItem("id", data);
     UI.pages.signUp.close();
@@ -103,7 +106,7 @@ async function loginUser(username, password) {
 // =====================
 // LEADERBOARD
 // =====================
-function startLeaderboardListener() {
+function setupLeaderboard() {
   onValue(ref(db, "users"), (snapshot) => {
     if (!snapshot.exists()) return;
     const users = Object.entries(snapshot.val()).map(([id, user]) => ({ id, ...user }));
@@ -145,9 +148,10 @@ function initializeGame() {
 
 function gameLoop() {
   decreaseTime();
-  updateScore();
+  increaseScore();
+  showScore();
   selectRandomBox();
-  handleClick();
+  showRandomBox();
   startTimer();
 }
 
@@ -162,32 +166,42 @@ function createBoxes() {
   }
 }
 
-function updateScore() {
-  gameState.score++;
+function showScore() {
   UI.game.score.innerText = gameState.score;
 }
 
-function selectRandomBox() {
-  const index = Math.floor(Math.random() * gameState.boxes.length);
-  gameState.selectedBox = gameState.boxes[index];
+function showRandomBox() {
   gameState.selectedBox.style.backgroundColor = COLORS.active;
 }
 
-function handleClick() {
-  gameState.selectedBox.addEventListener(
-    "click",
-    () => {
-      clearTimeout(gameState.countDown);
-      gameState.selectedBox.style.backgroundColor = COLORS.success;
-      sfx.tick2.play();
-      setTimeout(() => {
-        deSelectBox();
-        gameLoop();
-      }, 100);
-    },
-    { once: true },
-  );
+function handleClick(e) {
+  if (e.target.id === gameState.selectedBox?.id) {
+    clearTimeout(gameState.countDown);
+    setTimeout(() => {
+      deSelectBox();
+      gameLoop();
+    }, 100);
+  } else {
+    clearTimeout(gameState.countDown);
+    gameOver();
+  }
 }
+
+// function handleClick() {
+//   gameState.selectedBox.addEventListener(
+//     "click",
+//     () => {
+//       clearTimeout(gameState.countDown);
+//       gameState.selectedBox.style.backgroundColor = COLORS.success;
+//       sfx.tick2.play();
+//       setTimeout(() => {
+//         deSelectBox();
+//         gameLoop();
+//       }, 100);
+//     },
+//     { once: true },
+//   );
+// }
 
 function startTimer() {
   sfx.tick1.play();
@@ -199,10 +213,10 @@ async function gameOver() {
   UI.game.finalScore.innerText = gameState.score;
   sfx.success.play();
 
-  UI.game.message.innerText = await getRandomGameOverMessage();
+  UI.game.message.innerText = await getRandomMessage();
 
   const userKey = localStorage.getItem("id");
-  const { data } = await getSpecificUser(userKey);
+  const { data } = await getUserById(userKey);
 
   if (gameState.score > (data?.score || 0)) {
     await update(ref(db, "users/" + userKey), { score: gameState.score });
@@ -219,20 +233,6 @@ function deSelectBox() {
   }
 }
 
-function decreaseTime() {
-  if (gameState.score <= 8) gameState.time -= 40;
-  else if (gameState.score <= 16) gameState.time -= 30;
-  else if (gameState.score <= 32) gameState.time -= 20;
-  else if (gameState.time > 260) gameState.time -= 10;
-}
-
-function clearGameState() {
-  gameState.score = -1;
-  gameState.time = 1600;
-  clearTimeout(gameState.countDown);
-  deSelectBox();
-}
-
 async function loadMessages() {
   try {
     const res = await fetch("./messages.json");
@@ -243,6 +243,6 @@ async function loadMessages() {
   }
 }
 
-async function getRandomGameOverMessage() {
+async function getRandomMessage() {
   return messages.length > 0 ? messages[Math.floor(Math.random() * messages.length)] : "Good game!";
 }

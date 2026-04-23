@@ -13,7 +13,7 @@ import {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-async function getSpecificUser(userId) {
+async function getUserById(userId) {
   const snapshot = await get(ref(db, "users/" + userId));
 
   if (!snapshot.exists()) {
@@ -32,7 +32,7 @@ async function getUsers() {
   return { data: snapshot.val(), error: null };
 }
 
-async function setNewUser(username, password) {
+async function createUser(username, password) {
   const newUserRef = push(ref(db, "users"));
   try {
     set(newUserRef, {
@@ -46,5 +46,5 @@ async function setNewUser(username, password) {
   }
 }
 
-export { getSpecificUser, getUsers };
-export { setNewUser };
+export { getUserById, getUsers };
+export { createUser };
