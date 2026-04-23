@@ -9,18 +9,18 @@
   </head>
 
   <body>
-    <main class="menu-page" id="menu-page">
-      <div>
-        <h1 class="logo">BlazeTap 🔥</h1>
-        <p style="font-size: 0.8rem">By: Khaled - v2.3</p>
-      </div>
-      <!-- <img src="assets/game-logo.png" width="60%" style="max-width: 30rem;"> -->
+    <section class="menu-page" id="menu-page">
+      <span>
+        <h2 class="logo">BlazeTap🔥</h2>
+        <img src="profile.svg" alt="profile" />
+      </span>
+      <p style="font-size: 0.8rem">By: Khaled - v2.4</p>
       <button id="start-game-btn">Start</button>
       <button id="tutorial-btn">How to play?</button>
 
       <h4>Leaderboard</h4>
       <section id="leaderboard-menu"></section>
-    </main>
+    </section>
 
     <dialog id="sign-up-pop-up">
       <div>
@@ -34,7 +34,7 @@
       </div>
     </dialog>
 
-    <main id="how-to-play-page">
+    <section id="how-to-play-page">
       <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
 
       <ul>
@@ -47,22 +47,22 @@
       </ul>
 
       <button id="go-back-btn">Go back</button>
-    </main>
+    </section>
 
-    <main class="game-over-page" id="game-over-page">
+    <section class="game-over-page" id="game-over-page">
       <h1>💀 GAME OVER</h1>
-      <span>
-        <h2>🏆 Score:</h2>
-        <h1 style="text-align: center" id="game-over-score-screen"></h1>
+      <span style="display: flex; gap: 2rem">
+        <h3>🏆 Score: <span id="game-over-score-screen"></span></h3>
+        <h3>🔁 Tries: <span id="attempt-number">0</span></h3>
       </span>
       <h4 id="game-over-message"></h4>
       <button id="reset-btn">Main Menu</button>
-    </main>
+    </section>
 
-    <main class="game-page" id="game-page">
+    <section class="game-page" id="game-page">
       <h1 id="score-screen">0</h1>
       <section id="game-container"></section>
-    </main>
+    </section>
 
     <script type="module" src="app.js" defer></script>
   </body>

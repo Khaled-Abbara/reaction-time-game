@@ -14,6 +14,7 @@ import {
 import {
   showScore,
   showRandomBox,
+  dangerRandomBox,
   hideRandomBox,
   showRandomBoxSuccess,
   createBoxes,
@@ -177,7 +178,7 @@ function handleClick(e) {
       hideRandomBox(gameState.selectedBox);
       deSelectRandomBox();
       gameLoop();
-    }, 100);
+    }, 120);
     showRandomBoxSuccess(gameState.selectedBox);
   } else {
     hideRandomBox(gameState.selectedBox);
@@ -188,7 +189,11 @@ function handleClick(e) {
 
 function startTimer() {
   sfx.tick1.play();
-  gameState.countDown = setTimeout(gameOver, gameState.time);
+  dangerRandomBox(gameState.selectedBox, gameState.time / 1000);
+
+  gameState.countDown = setTimeout(() => {
+    gameOver();
+  }, gameState.time);
 }
 
 async function gameOver() {
