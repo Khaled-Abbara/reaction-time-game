@@ -1,6 +1,7 @@
-// =====================
-// Firebase & Auth Imports
-// =====================
+import { UI } from "./scripts/ui-tree.js";
+import { sfx } from "./scripts/sfx-tree.js";
+import { gameState } from "./scripts/game-state.js";
+
 import {
   firebaseConfig,
   initializeApp,
@@ -9,7 +10,14 @@ import {
   update,
   onValue,
 } from "./scripts/db-firebase.js";
-import { showScore, showRandomBox, hideRandomBox } from "./scripts/ui-view.js";
+
+import {
+  showScore,
+  showRandomBox,
+  hideRandomBox,
+  showRandomBoxSuccess,
+  createBoxes,
+} from "./scripts/ui-view.js";
 
 import {
   decreaseTime,
@@ -19,10 +27,7 @@ import {
   deSelectRandomBox,
 } from "./scripts/game-engine.js";
 
-import { getUserById, getUsers, createUser } from "./scripts/db-actions.js";
-import { UI } from "./scripts/Ui-tree.js";
-import { sfx } from "./scripts/sfx-tree.js";
-import { gameState } from "./scripts/game-state.js";
+import { getUserById, getUsers, createUser, updateUserScore } from "./scripts/db-actions.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -32,12 +37,6 @@ const db = getDatabase(app);
 // =====================
 let isLogin = false;
 let messages = [];
-
-const COLORS = {
-  active: "red",
-  success: "green",
-  default: "#222",
-};
 
 // =====================
 // INITIALIZATION
@@ -165,31 +164,23 @@ function initializeGame() {
 function gameLoop() {
   decreaseTime();
   increaseScore();
-  showScore();
+  showScore(gameState.score);
   selectRandomBox();
-  showRandomBox();
+  showRandomBox(gameState.selectedBox);
   startTimer();
 }
 
-function createBoxes() {
-  UI.game.container.innerHTML = "";
-  gameState.boxes = [];
-  for (let i = 0; i < 10; i++) {
-    const box = document.createElement("div");
-    box.id = i;
-    UI.game.container.appendChild(box);
-    gameState.boxes.push(box);
-  }
-}
-
 function handleClick(e) {
-  if (e.target.id === gameState.selectedBox?.id) {
+  if (e.target.id === gameState.selectedBox?.toString()) {
     clearTimeout(gameState.countDown);
     setTimeout(() => {
-      deSelectBox();
+      hideRandomBox(gameState.selectedBox);
+      deSelectRandomBox();
       gameLoop();
     }, 100);
+    showRandomBoxSuccess(gameState.selectedBox);
   } else {
+    hideRandomBox(gameState.selectedBox);
     clearTimeout(gameState.countDown);
     gameOver();
   }
@@ -206,13 +197,8 @@ async function gameOver() {
   sfx.success.play();
 
   UI.game.message.innerText = await getRandomMessage();
-
   const userKey = localStorage.getItem("id");
-  const { data } = await getUserById(userKey);
-
-  if (gameState.score > (data?.score || 0)) {
-    await update(ref(db, "users/" + userKey), { score: gameState.score });
-  }
+  console.log(await updateUserScore(userKey, gameState.score));
 }
 
 // =====================

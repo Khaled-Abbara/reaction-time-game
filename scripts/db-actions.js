@@ -46,5 +46,19 @@ async function createUser(username, password) {
   }
 }
 
-export { getUserById, getUsers };
+async function updateUserScore(userId, newScore) {
+  try {
+    const { data } = await getUserById(userId);
+
+    if (newScore > (data?.score || 0)) {
+      await update(ref(db, "users/" + userId), { score: newScore });
+      return { success: true, data: "New High Score!" };
+    }
+    return { success: true, data: "Score not improved" };
+  } catch (error) {
+    return { success: false, data: "Error updating score" };
+  }
+}
+
+export { getUserById, getUsers, updateUserScore };
 export { createUser };

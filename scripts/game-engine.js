@@ -15,12 +15,12 @@ function clearGameState() {
   gameState.score = -1;
   gameState.time = 1600;
   clearTimeout(gameState.countDown);
-  deSelectBox();
+  deSelectRandomBox();
 }
 
 function selectRandomBox() {
-  const index = Math.floor(Math.random() * gameState.boxes.length);
-  gameState.selectedBox = gameState.boxes[index];
+  gameState.selectedBox = Math.floor(Math.random() * 9);
+  console.log(gameState.selectedBox);
 }
 
 function deSelectRandomBox() {
