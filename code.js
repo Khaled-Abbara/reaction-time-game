@@ -2,11 +2,10 @@
 // Firebase & Auth Imports
 // =====================
 import { firebaseConfig, initializeApp, getDatabase, ref, update, onValue } from "./firebase.js";
-
 import { getSpecificUser, getUsers, setNewUser } from "./db.js";
-
 import { UI } from "./Ui-tree.js";
 import { sfx } from "./sfx.js";
+import { gameState } from "./game-state.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -22,19 +21,6 @@ const COLORS = {
   success: "green",
   default: "#222",
 };
-
-const gameState = {
-  maxBoxCount: 9,
-  score: -1,
-  boxes: [],
-  time: 1600,
-  countDown: null,
-  selectedBox: null,
-};
-
-// =====================
-// SOUNDS
-// =====================
 
 // =====================
 // INITIALIZATION
@@ -193,7 +179,7 @@ function handleClick() {
     () => {
       clearTimeout(gameState.countDown);
       gameState.selectedBox.style.backgroundColor = COLORS.success;
-      tick2.play();
+      sfx.tick2.play();
       setTimeout(() => {
         deSelectBox();
         gameLoop();
@@ -204,14 +190,14 @@ function handleClick() {
 }
 
 function startTimer() {
-  tick1.play();
+  sfx.tick1.play();
   gameState.countDown = setTimeout(gameOver, gameState.time);
 }
 
 async function gameOver() {
   showPage("gameOver");
   UI.game.finalScore.innerText = gameState.score;
-  successSfx.play();
+  sfx.success.play();
 
   UI.game.message.innerText = await getRandomGameOverMessage();
 
