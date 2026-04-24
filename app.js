@@ -52,7 +52,7 @@ UI.buttons.loginToggle.addEventListener("click", toggleAuthForm);
 UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
-
+UI.buttons.profile.addEventListener("click", showAccount);
 UI.game.container.addEventListener("click", (e) => handleClick(e));
 
 // =====================
@@ -70,6 +70,11 @@ function showPage(targetPageKey) {
 // =====================
 // AUTH LOGIC
 // =====================
+
+function showAccount() {
+  UI.modal.account.showModal();
+}
+
 function isLoggedIn() {
   const userKey = localStorage.getItem("id");
   if (!userKey) UI.pages.signUp.showModal();

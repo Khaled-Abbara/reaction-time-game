@@ -6,6 +6,9 @@ const UI = {
     tutorial: document.getElementById("how-to-play-page"),
     signUp: document.getElementById("sign-up-pop-up"), // <dialog>
   },
+  modal: {
+    account: document.getElementById("account-modal"),
+  },
   buttons: {
     start: document.getElementById("start-game-btn"),
     reset: document.getElementById("reset-btn"),
@@ -13,6 +16,7 @@ const UI = {
     tutorial: document.getElementById("tutorial-btn"),
     createAccount: document.getElementById("create-account-btn"),
     loginToggle: document.getElementById("login-state-btn"),
+    profile: document.getElementById("profile-btn"),
   },
   game: {
     container: document.getElementById("game-container"),
@@ -26,6 +30,11 @@ const UI = {
     username: document.getElementById("username"),
     password: document.getElementById("password"),
     error: document.getElementById("error"),
+  },
+  account: {
+    username: document.getElementById("account-username"),
+    attempts: document.getElementById("account-attempts"),
+    score: document.getElementById("account-score"),
   },
   boxes: {},
 };
