@@ -3,6 +3,8 @@ import { User } from "./scripts/auth-tree.js";
 import { sfx } from "./scripts/sfx-tree.js";
 import { gameState } from "./scripts/game-state.js";
 
+import { validateAuthInput } from "./scripts/auth-actions.js";
+
 import {
   firebaseConfig,
   initializeApp,
@@ -20,6 +22,8 @@ import {
   showRandomBoxSuccess,
   createBoxes,
   showPage,
+  showAuthModal,
+  toggleAuthForm,
 } from "./scripts/ui-view.js";
 
 import {
@@ -38,11 +42,11 @@ const db = getDatabase(app);
 // =====================
 // STATE & CONSTANTS
 // =====================
-let isLogin = false;
+let loginStatus = false;
 let messages = [];
 
 // =====================
-// INITIALIZATION
+// Listeners
 // =====================
 isLoggedIn();
 setupLeaderboard();
@@ -64,64 +68,53 @@ UI.navigation.credits.addEventListener("click", () => showPage("credits"));
 UI.navigation.account.addEventListener("click", () => showPage("account"));
 
 // =====================
-// UI HELPERS
-// =====================
-
-// =====================
 // AUTH LOGIC
 // =====================
 
-function isLoggedIn() {
-  const userKey = localStorage.getItem("id");
-  if (!userKey) UI.modal.auth.showModal();
-  else UI.modal.auth.close();
-}
-
-function toggleAuthForm() {
-  isLogin = !isLogin;
-  UI.auth.header.innerText = isLogin ? "Login" : "Create an Account";
-  UI.buttons.loginToggle.innerText = isLogin
-    ? "Can't login?.. create account"
-    : "Have an account?.. login";
-  UI.auth.error.innerText = "";
-}
+const userKey = localStorage.getItem("id");
+showAuthModal(userKey);
+// toggleAuthForm(userKey);
 
 async function createAccount() {
-  const username = UI.auth.username.value;
-  const password = UI.auth.password.value;
+  if (loginStatus == true) return;
 
-  if (!username || !password) return (UI.auth.error.innerText = "Fields cannot be empty.");
-  if (username.length < 5 || password.length < 5)
-    return (UI.auth.error.innerText = "Minimum 5 characters required.");
-  if (username.includes(" ") || password.includes(" "))
-    return (UI.auth.error.innerText = "No spaces allowed.");
+  const usernameInput = UI.auth.username.value;
+  const passwordInput = UI.auth.password.value;
 
-  if (isLogin) return loginUser(username, password);
+  const { success, error } = validateAuthInput(usernameInput, passwordInput);
 
-  const { success, data } = createUser(username, password);
   if (success) {
-    localStorage.setItem("id", data);
-    UI.pages.signUp.close();
+    const { success, data } = await createUser(usernameInput, passwordInput);
+
+    if (success) {
+      localStorage.setItem("id", data);
+      UI.modal.auth.close();
+    }
+  } else {
+    UI.auth.error.innerText = error;
+    return;
   }
 }
 
-async function loginUser(username, password) {
+async function loginAccount(username, password) {
+  if (loginStatus == false) return;
+
+  const usernameInput = UI.auth.username.value;
+  const passwordInput = UI.auth.password.value;
+
   const users = await getUsers();
   const foundUser = Object.entries(users).find(
     ([_, user]) => user.username === username && user.password === password,
   );
 
-  if (!foundUser) {
-    UI.auth.error.innerText = "Wrong username or password";
-    return;
-  }
-
   localStorage.setItem("id", foundUser[0]);
   UI.pages.signUp.close();
+
+  UI.auth.error.innerText = "Wrong username or password";
 }
 
 // =====================
-// LEADERBOARD
+// LEADERBOARD Websocket
 // =====================
 function setupLeaderboard() {
   onValue(ref(db, "users"), (snapshot) => {

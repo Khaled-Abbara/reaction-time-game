@@ -70,6 +70,22 @@ function showPage(activePageKey) {
   }
 }
 
+function showAuthModal(userKey) {
+  if (!userKey) UI.modal.auth.showModal();
+  else UI.modal.auth.close();
+}
+
+function toggleAuthForm(userKey) {
+  if (userKey) {
+    UI.auth.header.innerText = "Login to your Account";
+    UI.buttons.loginToggle.innerText = "Can't login?. create account";
+  } else {
+    UI.auth.header.innerText = "Create an Account";
+    UI.buttons.loginToggle.innerText = "Have an account?.. login";
+  }
+  UI.auth.error.innerText = "";
+}
+
 export {
   showScore,
   showRandomBox,
@@ -78,4 +94,6 @@ export {
   showRandomBoxSuccess,
   createBoxes,
   showPage,
+  showAuthModal,
+  toggleAuthForm,
 };
