@@ -48,32 +48,35 @@ let messages = [];
 // =====================
 // Listeners
 // =====================
-isLoggedIn();
 setupLeaderboard();
 
 window.addEventListener("load", loadMessages);
+
 UI.buttons.start.addEventListener("click", initializeGame);
-UI.buttons.createAccount.addEventListener("click", createAccount);
-UI.buttons.loginToggle.addEventListener("click", toggleAuthForm);
+UI.buttons.createAccount.addEventListener("click", loginStatus ? createAccount : loginAccount);
 UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
 UI.buttons.profile.addEventListener("click", () => showPage("account"));
-
-UI.game.container.addEventListener("click", (e) => handleClick(e));
 
 UI.navigation.menu.addEventListener("click", resetGame);
 UI.navigation.leaderboard.addEventListener("click", () => showPage("leaderboard"));
 UI.navigation.credits.addEventListener("click", () => showPage("credits"));
 UI.navigation.account.addEventListener("click", () => showPage("account"));
 
+UI.game.container.addEventListener("click", (e) => handleClick(e));
+
 // =====================
 // AUTH LOGIC
 // =====================
 
+UI.buttons.loginToggle.addEventListener("click", () => {
+  loginStatus = !loginStatus;
+  toggleAuthForm(loginStatus);
+});
+
 const userKey = localStorage.getItem("id");
 showAuthModal(userKey);
-// toggleAuthForm(userKey);
 
 async function createAccount() {
   if (loginStatus == true) return;
@@ -110,7 +113,7 @@ async function loginAccount(username, password) {
   localStorage.setItem("id", foundUser[0]);
   UI.pages.signUp.close();
 
-  UI.auth.error.innerText = "Wrong username or password";
+  UI.auth.error.innerText = "Incorrect username or password";
 }
 
 // =====================
