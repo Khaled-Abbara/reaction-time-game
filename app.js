@@ -105,13 +105,13 @@ async function loginAccount(username, password) {
   const usernameInput = UI.auth.username.value;
   const passwordInput = UI.auth.password.value;
 
-  const users = await getUsers();
-  const foundUser = Object.entries(users).find(
-    ([_, user]) => user.username === username && user.password === password,
+  const { data, error } = await getUsers();
+  const foundUser = Object.entries(data).find(
+    ([_, user]) => user.username === usernameInput && user.password === passwordInput,
   );
 
   localStorage.setItem("id", foundUser[0]);
-  UI.pages.signUp.close();
+  UI.modal.auth.close();
 
   UI.auth.error.innerText = "Incorrect username or password";
 }

@@ -75,10 +75,10 @@ function showAuthModal(userKey) {
   else UI.modal.auth.close();
 }
 
-function toggleAuthForm(userKey) {
-  if (userKey) {
+function toggleAuthForm(success) {
+  if (success) {
     UI.auth.header.innerText = "Login to your Account";
-    UI.buttons.loginToggle.innerText = "Can't login?. create account";
+    UI.buttons.loginToggle.innerText = "Can't login?.. create account";
   } else {
     UI.auth.header.innerText = "Create an Account";
     UI.buttons.loginToggle.innerText = "Have an account?.. login";
