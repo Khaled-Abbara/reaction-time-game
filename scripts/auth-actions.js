@@ -1,5 +1,5 @@
 async function validateAuthInput(username, password) {
-  if (!username || !password) return "Fields cannot be empty.";
+  if (!username || !password) return { success: false, error: "Fields cannot be empty." };
 
   if (username.length < 4)
     return { success: false, error: "Minimum 4 characters required for username." };
@@ -13,7 +13,7 @@ async function validateAuthInput(username, password) {
   if (password.includes(" "))
     return { success: false, error: "No spaces are allowed in password." };
 
-  if ("/^\w+$/".test(username))
+  if (!/^[A-Za-z0-9_]+$/.test(username))
     return { success: false, error: "Usernames can only have letters, numbers, and underscores." };
 
   if (username.length > 25)

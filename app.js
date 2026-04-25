@@ -53,7 +53,6 @@ setupLeaderboard();
 window.addEventListener("load", loadMessages);
 
 UI.buttons.start.addEventListener("click", initializeGame);
-UI.buttons.createAccount.addEventListener("click", loginStatus ? createAccount : loginAccount);
 UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
@@ -70,7 +69,11 @@ UI.game.container.addEventListener("click", (e) => handleClick(e));
 // AUTH LOGIC
 // =====================
 
+UI.buttons.submitAuth.addEventListener("click", () =>
+  loginStatus ? loginAccount() : createAccount(),
+);
 UI.buttons.loginToggle.addEventListener("click", () => {
+  console.log(loginStatus);
   loginStatus = !loginStatus;
   toggleAuthForm(loginStatus);
 });
@@ -79,12 +82,12 @@ const userKey = localStorage.getItem("id");
 showAuthModal(userKey);
 
 async function createAccount() {
-  if (loginStatus == true) return;
+  console.log(111111111);
 
   const usernameInput = UI.auth.username.value;
   const passwordInput = UI.auth.password.value;
 
-  const { success, error } = validateAuthInput(usernameInput, passwordInput);
+  const { success, error } = await validateAuthInput(usernameInput, passwordInput);
 
   if (success) {
     const { success, data } = await createUser(usernameInput, passwordInput);
@@ -100,8 +103,7 @@ async function createAccount() {
 }
 
 async function loginAccount(username, password) {
-  if (loginStatus == false) return;
-
+  console.log(22222222222);
   const usernameInput = UI.auth.username.value;
   const passwordInput = UI.auth.password.value;
 
@@ -110,10 +112,13 @@ async function loginAccount(username, password) {
     ([_, user]) => user.username === usernameInput && user.password === passwordInput,
   );
 
-  localStorage.setItem("id", foundUser[0]);
-  UI.modal.auth.close();
-
-  UI.auth.error.innerText = "Incorrect username or password";
+  if (foundUser) {
+    localStorage.setItem("id", foundUser[0]);
+    UI.modal.auth.close();
+    UI.auth.error.innerText = "";
+  } else {
+    UI.auth.error.innerText = "Incorrect username or password";
+  }
 }
 
 // =====================

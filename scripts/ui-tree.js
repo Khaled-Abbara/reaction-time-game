@@ -9,7 +9,7 @@ const UI = {
     leaderboard: document.getElementById("leaderboard-page"),
   },
   modal: {
-    auth: document.getElementById("sign-up-pop-up"),
+    auth: document.getElementById("auth-modal"),
   },
   navigation: {
     navTag: document.querySelector("nav"),
@@ -25,7 +25,7 @@ const UI = {
     reset: document.getElementById("reset-btn"),
     goBack: document.getElementById("go-back-btn"),
     tutorial: document.getElementById("tutorial-btn"),
-    createAccount: document.getElementById("create-account-btn"),
+    submitAuth: document.getElementById("submit-auth-btn"),
     loginToggle: document.getElementById("login-state-btn"),
     profile: document.getElementById("profile-btn"),
   },

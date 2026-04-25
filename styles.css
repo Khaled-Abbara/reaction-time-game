@@ -319,23 +319,31 @@ input:focus {
 /* ------------------------------------------------------------
    12. SIGN-UP DIALOG
    ------------------------------------------------------------ */
-dialog {
+#auth-modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+
   border: none;
   border-radius: var(--radius-lg);
   background: #121212;
   color: var(--text-primary);
-  width: min(90vw, 300px);
+
+  width: 20rem;
+  max-width: 90%;
 }
 
-dialog::backdrop {
+#auth-modal::backdrop {
   background: var(--bg-overlay);
 }
 
-#sign-up-pop-up div {
+#auth-modal div {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
   padding: var(--space-lg);
+
+  padding-bottom: 2rem;
 }
 
 #account-header {
@@ -344,6 +352,7 @@ dialog::backdrop {
 
 #error {
   color: var(--text-error);
+  min-height: 1.4rem;
   font-size: 0.85rem;
   text-align: center;
 }
