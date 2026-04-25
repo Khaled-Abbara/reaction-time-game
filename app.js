@@ -52,33 +52,40 @@ UI.buttons.loginToggle.addEventListener("click", toggleAuthForm);
 UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
-UI.buttons.profile.addEventListener("click", showAccount);
+UI.buttons.profile.addEventListener("click", () => showPage("account"));
+
 UI.game.container.addEventListener("click", (e) => handleClick(e));
+
+UI.navigation.menu.addEventListener("click", resetGame);
+UI.navigation.leaderboard.addEventListener("click", () => showPage("leaderboard"));
+UI.navigation.credits.addEventListener("click", () => showPage("credits"));
+UI.navigation.account.addEventListener("click", () => showPage("account"));
 
 // =====================
 // UI HELPERS
 // =====================
-function showPage(targetPageKey) {
-  Object.keys(UI.pages).forEach((key) => {
-    if (key !== "signUp") {
-      // Dialogs are handled with .showModal()
-      UI.pages[key].style.display = key === targetPageKey ? "flex" : "none";
+function showPage(activePageKey) {
+  const pages = UI.pages;
+
+  for (const pageKey in pages) {
+    if (!pages[pageKey]) continue;
+
+    if (pageKey === activePageKey) {
+      pages[pageKey].style.display = "flex";
+    } else {
+      pages[pageKey].style.display = "none";
     }
-  });
+  }
 }
 
 // =====================
 // AUTH LOGIC
 // =====================
 
-function showAccount() {
-  UI.modal.account.showModal();
-}
-
 function isLoggedIn() {
   const userKey = localStorage.getItem("id");
-  if (!userKey) UI.pages.signUp.showModal();
-  else UI.pages.signUp.close();
+  if (!userKey) UI.modal.auth.showModal();
+  else UI.modal.auth.close();
 }
 
 function toggleAuthForm() {

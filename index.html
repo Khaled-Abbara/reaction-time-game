@@ -9,67 +9,67 @@
   </head>
 
   <body>
-    <!-- <section class="menu-page" id="menu-page">
+    <nav>
+      <span id="menu-nav">
+        <img src="https://placehold.co/32x32" alt="" />
+        <p>Menu</p>
+      </span>
+      <span id="leaderboard-nav">
+        <img src="https://placehold.co/32x32" alt="" />
+        <p>Leaderboards</p>
+      </span>
+      <span id="credits-nav">
+        <img src="https://placehold.co/32x32" alt="" />
+        <p>Credits</p>
+      </span>
+      <span id="account-nav">
+        <img id="profile-btn" class="profile" src="./assets/profile.svg" alt="profile" />
+        <p>You</p>
+      </span>
+    </nav>
+
+    <section class="page" id="menu-page">
       <span>
         <h2 class="logo">BlazeTap🔥</h2>
-        <p style="font-size: 0.8rem">By: Khaled - v2.4</p>
+        <p style="font-size: 0.8rem">By: Khaled - v3.0</p>
       </span>
       <button id="start-game-btn">Start</button>
       <button id="tutorial-btn">How to play?</button>
 
       <h4>Leaderboard</h4>
-      <section id="leaderboard-menu"></section> -->
-
-      <nav>
-        <span>
-          <img src="https://placehold.co/32x32" alt="" />
-          <p>Leaderboard</p>
-        </span>
-        <span>
-          <img id="profile-btn" class="profile" src="./assets/profile.svg" alt="profile" />
-          <p>You</p>
-        </span>
-        <span>
-          <img src="https://placehold.co/32x32" alt="" />
-          <p>Credit</p>
-        </span>
-      </nav>
+      <section id="leaderboard-menu"></section>
     </section>
 
-    <section>
+    <section class="page" id="leaderboard-page">
+      <p>this leaderboard will be different <br />from the homescreen one</p>
+      <span style="display: flex; gap: 1rem">
+        <button>Current<br />Leaderboard</button>
+        <button>Legacy leaderboard</button>
+      </span>
+    </section>
+
+    <section class="page" id="credits-page">
       <h2>Thank you for trying BlazeTap🔥</h2>
       <p>Game made by: Khaled Abbara</p>
       <p>Estimated development time: 40 hours</p>
       <p>Tech stack: HTML, CSS, JAVASCRIPT, FIREBASE, GIT</p>
       <p>Made using modern web standards.</p>
       <p>Please share the game with your friends 👀</p>
-      <a href="">instgram</a>
-      <a href="">Linkedin</a>
-      <a href="">Github</a>
+      <a class="anchor-icons" href=""><img src="./assets/logos/instagram.svg" alt="" /></a>
+      <a class="anchor-icons" href=""><img src="./assets/logos/linkedin.svg" alt="" /></a>
+      <a class="anchor-icons" href=""><img src="./assets/logos/github.svg" alt="" /></a>
     </section>
 
-    <!-- <dialog id="account-modal">
+    <section class="page" id="account-page">
       <img class="profile-photo" src="https://placehold.co/100x100" alt="" />
       <h2>username</h2>
       <h2>score</h2>
       <h2>attempts</h2>
       <button>log out</button>
       <p>request help from Khaled if needed</p>
-    </dialog> -->
+    </section>
 
-    <dialog id="sign-up-pop-up">
-      <div>
-        <h2 style="text-align: center" id="account-header">Create an Account</h2>
-        <input id="username" placeholder="👤 choose a simple name" />
-        <input id="password" placeholder="🔒 choose a simple password" />
-        <button id="create-account-btn">Submit</button>
-        <button id="login-state-btn">Have an account?.. login</button>
-        <p style="text-align: center">📸 Screenshot your password for easy login</p>
-        <p id="error"></p>
-      </div>
-    </dialog>
-
-    <section id="how-to-play-page">
+    <section class="page" id="how-to-play-page">
       <h3><b>BlazeTap 🔥</b> is a reaction-based clicking game.</h3>
 
       <ul>
@@ -84,7 +84,7 @@
       <button id="go-back-btn">Go back</button>
     </section>
 
-    <section class="game-over-page" id="game-over-page">
+    <section class="page" id="game-over-page">
       <h1>💀 GAME OVER</h1>
       <span style="display: flex; gap: 2rem">
         <h3>🏆 Score: <span id="game-over-score-screen"></span></h3>
@@ -94,10 +94,22 @@
       <button id="reset-btn">Main Menu</button>
     </section>
 
-    <section class="game-page" id="game-page">
+    <section class="page" id="game-page">
       <h1 id="score-screen">0</h1>
       <section id="game-container"></section>
     </section>
+
+    <dialog id="sign-up-pop-up">
+      <div>
+        <h2 style="text-align: center" id="account-header">Create an Account</h2>
+        <input id="username" placeholder="👤 choose a simple name" />
+        <input id="password" placeholder="🔒 choose a simple password" />
+        <button id="create-account-btn">Submit</button>
+        <button id="login-state-btn">Have an account?.. login</button>
+        <p style="text-align: center">📸 Screenshot your password for easy login</p>
+        <p id="error"></p>
+      </div>
+    </dialog>
 
     <script type="module" src="app.js" defer></script>
   </body>

@@ -4,11 +4,21 @@ const UI = {
     game: document.getElementById("game-page"),
     gameOver: document.getElementById("game-over-page"),
     tutorial: document.getElementById("how-to-play-page"),
-    signUp: document.getElementById("sign-up-pop-up"), // <dialog>
+    account: document.getElementById("account-page"),
+    credits: document.getElementById("credits-page"),
+    leaderboard: document.getElementById("leaderboard-page"),
   },
   modal: {
-    account: document.getElementById("account-modal"),
+    auth: document.getElementById("sign-up-pop-up"),
   },
+  navigation: {
+    menu: document.getElementById("menu-nav"),
+    game: document.getElementById("game-nav"),
+    account: document.getElementById("account-nav"),
+    credits: document.getElementById("credits-nav"),
+    leaderboard: document.getElementById("leaderboard-nav"),
+  },
+
   buttons: {
     start: document.getElementById("start-game-btn"),
     reset: document.getElementById("reset-btn"),
