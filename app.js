@@ -18,6 +18,7 @@ import {
   hideRandomBox,
   showRandomBoxSuccess,
   createBoxes,
+  showPage,
 } from "./scripts/ui-view.js";
 
 import {
@@ -64,19 +65,6 @@ UI.navigation.account.addEventListener("click", () => showPage("account"));
 // =====================
 // UI HELPERS
 // =====================
-function showPage(activePageKey) {
-  const pages = UI.pages;
-
-  for (const pageKey in pages) {
-    if (!pages[pageKey]) continue;
-
-    if (pageKey === activePageKey) {
-      pages[pageKey].style.display = "flex";
-    } else {
-      pages[pageKey].style.display = "none";
-    }
-  }
-}
 
 // =====================
 // AUTH LOGIC

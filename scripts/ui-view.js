@@ -50,6 +50,26 @@ function createBoxes() {
     UI.boxes[i] = box;
   }
 }
+
+function showPage(activePageKey) {
+  const pages = UI.pages;
+
+  if (pages[activePageKey] == pages["game"] || pages[activePageKey] == pages["gameOver"]) {
+    UI.navigation.navTag.style.display = "none";
+  } else {
+    UI.navigation.navTag.style.display = "flex";
+  }
+  for (const pageKey in pages) {
+    if (!pages[pageKey]) continue;
+
+    if (pageKey === activePageKey) {
+      pages[pageKey].style.display = "flex";
+    } else {
+      pages[pageKey].style.display = "none";
+    }
+  }
+}
+
 export {
   showScore,
   showRandomBox,
@@ -57,4 +77,5 @@ export {
   hideRandomBox,
   showRandomBoxSuccess,
   createBoxes,
+  showPage,
 };

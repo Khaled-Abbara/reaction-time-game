@@ -12,6 +12,7 @@ const UI = {
     auth: document.getElementById("sign-up-pop-up"),
   },
   navigation: {
+    navTag: document.querySelector("nav"),
     menu: document.getElementById("menu-nav"),
     game: document.getElementById("game-nav"),
     account: document.getElementById("account-nav"),
