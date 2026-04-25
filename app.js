@@ -1,4 +1,5 @@
 import { UI } from "./scripts/ui-tree.js";
+import { User } from "./scripts/auth-tree.js";
 import { sfx } from "./scripts/sfx-tree.js";
 import { gameState } from "./scripts/game-state.js";
 
