@@ -498,3 +498,7 @@ nav p {
 .anchor-icons img {
   width: 2rem;
 }
+
+a {
+  color: #ff5733; /* Use Hex codes, RGB, or color names */
+}
