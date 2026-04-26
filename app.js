@@ -48,7 +48,7 @@ let messages = [];
 // =====================
 // Listeners
 // =====================
-setupLeaderboard();
+setupLeaderboards();
 
 window.addEventListener("load", loadMessages);
 
@@ -82,8 +82,6 @@ const userKey = localStorage.getItem("id");
 showAuthModal(userKey);
 
 async function createAccount() {
-  console.log(111111111);
-
   const usernameInput = UI.auth.username.value;
   const passwordInput = UI.auth.password.value;
 
@@ -103,7 +101,6 @@ async function createAccount() {
 }
 
 async function loginAccount(username, password) {
-  console.log(22222222222);
   const usernameInput = UI.auth.username.value;
   const passwordInput = UI.auth.password.value;
 
@@ -124,17 +121,18 @@ async function loginAccount(username, password) {
 // =====================
 // LEADERBOARD Websocket
 // =====================
-function setupLeaderboard() {
+function setupLeaderboards() {
   onValue(ref(db, "users"), (snapshot) => {
     if (!snapshot.exists()) return;
     const users = Object.entries(snapshot.val()).map(([id, user]) => ({ id, ...user }));
     users.sort((a, b) => b.score - a.score);
-    renderLeaderboard(users);
+    renderLeaderboardSm(users);
+    renderLeaderboardLg(users);
   });
 }
 
-function renderLeaderboard(users) {
-  UI.game.leaderboard.innerHTML = "";
+function renderLeaderboardSm(users) {
+  UI.game.leaderboardSm.innerHTML = "";
   let previousScore = null;
   let rank = 0;
 
@@ -146,10 +144,35 @@ function renderLeaderboard(users) {
     const div = document.createElement("div");
     if (rank <= 3) div.classList.add(["first", "second", "third"][rank - 1]);
     div.innerHTML = `<span>${rank}. ${user.username}</span><span>${user.score}</span>`;
-    UI.game.leaderboard.appendChild(div);
+    UI.game.leaderboardSm.appendChild(div);
   });
 }
 
+function renderLeaderboardLg(users) {
+  // UI.game.leaderboardLg.innerHTML = "";
+  let previousScore = null;
+  let rank = 0;
+
+  // Ensure users is an array before calling .slice()
+  if (!Array.isArray(users)) return;
+
+  users.slice(0, 100).forEach((user) => {
+    if (user.score !== previousScore) {
+      rank++;
+      previousScore = user.score;
+    }
+    const div = document.createElement("div");
+
+    if (rank <= 3) div.classList.add(["first", "second", "third"][rank - 1]);
+    div.innerHTML = `
+      <span>${rank}.</span>
+      <span>${user.username}</span>
+      <span>${user.score}</span>
+      <span>${user.attempts}</span>`;
+
+    UI.game.leaderboardLg.appendChild(div);
+  });
+}
 // =====================
 // GAME CORE
 // =====================

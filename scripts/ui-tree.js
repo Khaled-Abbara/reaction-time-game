@@ -34,7 +34,8 @@ const UI = {
     score: document.getElementById("score-screen"),
     finalScore: document.getElementById("game-over-score-screen"),
     message: document.getElementById("game-over-message"),
-    leaderboard: document.getElementById("leaderboard-menu"),
+    leaderboardSm: document.getElementById("leaderboard-sm"),
+    leaderboardLg: document.getElementById("leaderboard-lg"),
   },
   auth: {
     header: document.getElementById("account-header"),

@@ -148,8 +148,7 @@ input:focus {
   align-items: center;
   gap: var(--space-md);
   width: 100%;
-  padding: var(--space-md) var(--space-md) calc(var(--nav-height) + var(--space-md));
-  /* bottom padding keeps content clear of fixed nav */
+  padding: 4rem var(--space-md) calc(var(--nav-height) + var(--space-md));
 }
 
 #game-page,
@@ -163,46 +162,94 @@ input:focus {
 /* ------------------------------------------------------------
    7. MENU PAGE
    ------------------------------------------------------------ */
-#menu-page span {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
 
 #menu-page p {
   color: var(--text-muted);
 }
 
 /* ------------------------------------------------------------
-   8. LEADERBOARD (menu)
+   8. LEADERBOARDs (menu)
    ------------------------------------------------------------ */
-#leaderboard-menu {
+#leaderboard-sm {
   width: 100%;
-  max-width: 300px;
-  height: 30vh;
-  max-height: 220px;
+  max-width: 90%;
+  height: 45vh;
+
   overflow-y: auto;
   overflow-x: hidden;
+
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-xs);
-  font-size: 1rem;
 }
 
-#leaderboard-menu div {
+#leaderboard-sm div {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  text-align: left;
+  gap: 1rem;
+  flex: 1;
+  font-size: 1rem;
+
   background: rgba(94, 94, 94, 0.12);
-  padding: var(--space-sm);
-  margin: 1px 0;
-  border-bottom: 1px solid var(--border-subtle);
-  border-radius: 3px;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-md);
+  border-bottom: 0.0625rem solid var(--border-subtle);
+  border-radius: 0.2rem;
 }
 
-#leaderboard-menu div:active {
+#leaderboard-sm div:active {
+  background: var(--bg-elevated);
+}
+
+/* ----------------------------------------- */
+
+#leaderboard-lg {
+  width: 102%;
+  height: 85vh;
+  margin-top: -1rem;
+  padding: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: var(--bg-surface);
+
+  display: grid;
+  grid-auto-rows: minmax(40px, auto);
+}
+
+/* Header row (optional if you add one) */
+#leaderboard-lg .header {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr 5rem 5rem; /* adjust columns as needed */
+  font-weight: bold;
+  background: var(--bg-elevated);
+  padding: var(--space-sm);
+  border-bottom: 3px solid var(--border-default);
+}
+
+/* Each row becomes a grid row */
+#leaderboard-lg div {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr 5rem 5rem;
+  /* rank | name | score | attempts */
+
+  align-items: center;
+  font-size: 0.8rem;
+
+  background: rgba(94, 94, 94, 0.12);
+  padding: var(--space-sm);
+  margin: 0.1rem 0;
+
+  border-bottom: 0.0625rem solid var(--border-subtle);
+}
+
+/* Optional hover/active effect */
+#leaderboard-lg div:active {
   background: var(--bg-elevated);
 }
 
