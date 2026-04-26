@@ -48,6 +48,7 @@ const UI = {
     username: document.getElementById("account-username"),
     score: document.getElementById("account-score"),
     attempts: document.getElementById("account-attempts"),
+    percentile: document.getElementById("account-percentile"),
   },
   boxes: {},
 };

@@ -86,10 +86,32 @@ function toggleAuthForm(success) {
   UI.auth.error.innerText = "";
 }
 
-function showAccountInfo(username, score, attempts) {
+function showAccountInfo(username, score, attempts, users) {
   UI.account.username.innerText = "Welcome back, " + username;
   UI.account.score.innerText = "Current top score " + score;
   UI.account.attempts.innerText = "Total attempts so far: " + attempts;
+
+  const percentile = getTopPercentage(score, users);
+  // Change topPercent to percentile to match the variable defined above
+  if (percentile <= 50) {
+    UI.account.percentile.innerText = `You are in the top ${percentile}% of players`;
+  } else {
+    UI.account.percentile.innerText = `You are in the bottom ${percentile}% of players`;
+  }
+}
+
+function getTopPercentage(userScore, data) {
+  const scores = Object.values(data).map((u) => u.score);
+
+  const lower = scores.filter((s) => s < userScore).length;
+  const equal = scores.filter((s) => s === userScore).length;
+
+  // average rank for ties
+  const rank = lower + equal / 2;
+
+  const percentile = (rank / scores.length) * 100;
+
+  return Math.round(100 - percentile);
 }
 
 export {

@@ -529,7 +529,7 @@ a {
 }
 
 #account-logout-btn {
-  margin-top: 25rem;
+  margin-top: 24rem;
   color: rgb(255, 75, 75);
 }
 
@@ -543,7 +543,7 @@ a {
   gap: 1rem;
   border: 1px solid black;
 
-  padding: 1rem 3rem 1rem 1rem;
+  padding: 1rem 5rem 1rem 1rem;
   background: rgb(17, 17, 17);
   color: var(--text-primary);
   border: 1px solid var(--border-default);
@@ -552,4 +552,8 @@ a {
 
 .account-info h3 {
   font-weight: 100;
+}
+
+.muted {
+  color: var(--text-muted);
 }

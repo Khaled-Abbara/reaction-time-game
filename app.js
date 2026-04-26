@@ -45,6 +45,7 @@ const db = getDatabase(app);
 // =====================
 let loginStatus = false;
 let messages = [];
+let userAccounts = null;
 
 // =====================
 // Listeners
@@ -134,8 +135,7 @@ async function collectProfileData() {
 
   User.name = data.username;
   User.score = data.score;
-  User.attempts = 111;
-  showAccountInfo(User.name, User.score, User.attempts);
+  showAccountInfo(User.name, User.score, User.attempts, userAccounts);
 
   console.log(User);
 }
@@ -146,6 +146,8 @@ async function collectProfileData() {
 function setupLeaderboards() {
   onValue(ref(db, "users"), (snapshot) => {
     if (!snapshot.exists()) return;
+    userAccounts = snapshot.val();
+    console.log(userAccounts);
     const users = Object.entries(snapshot.val()).map(([id, user]) => ({ id, ...user }));
     users.sort((a, b) => b.score - a.score);
     renderLeaderboardSm(users);
