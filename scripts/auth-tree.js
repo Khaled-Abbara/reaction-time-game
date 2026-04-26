@@ -1,7 +1,6 @@
 const User = {
   name: null,
-  password: null,
-  loginStatus: false,
+  score: null,
 };
 
 export { User };

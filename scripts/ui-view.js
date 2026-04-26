@@ -86,6 +86,12 @@ function toggleAuthForm(success) {
   UI.auth.error.innerText = "";
 }
 
+function showAccountInfo(username, score, attempts) {
+  UI.account.username.innerText = "Welcome back, " + username;
+  UI.account.score.innerText = "Current top score " + score;
+  UI.account.attempts.innerText = "Total attempts so far: " + attempts;
+}
+
 export {
   showScore,
   showRandomBox,
@@ -96,4 +102,5 @@ export {
   showPage,
   showAuthModal,
   toggleAuthForm,
+  showAccountInfo,
 };

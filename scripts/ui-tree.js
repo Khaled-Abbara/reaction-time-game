@@ -28,6 +28,7 @@ const UI = {
     submitAuth: document.getElementById("submit-auth-btn"),
     loginToggle: document.getElementById("login-state-btn"),
     profile: document.getElementById("profile-btn"),
+    logout: document.getElementById("account-logout-btn"),
   },
   game: {
     container: document.getElementById("game-container"),
@@ -45,8 +46,8 @@ const UI = {
   },
   account: {
     username: document.getElementById("account-username"),
-    attempts: document.getElementById("account-attempts"),
     score: document.getElementById("account-score"),
+    attempts: document.getElementById("account-attempts"),
   },
   boxes: {},
 };

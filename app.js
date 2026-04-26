@@ -24,6 +24,7 @@ import {
   showPage,
   showAuthModal,
   toggleAuthForm,
+  showAccountInfo,
 } from "./scripts/ui-view.js";
 
 import {
@@ -49,6 +50,7 @@ let messages = [];
 // Listeners
 // =====================
 setupLeaderboards();
+collectProfileData();
 
 window.addEventListener("load", loadMessages);
 
@@ -57,6 +59,11 @@ UI.buttons.reset.addEventListener("click", resetGame);
 UI.buttons.tutorial.addEventListener("click", () => showPage("tutorial"));
 UI.buttons.goBack.addEventListener("click", resetGame);
 UI.buttons.profile.addEventListener("click", () => showPage("account"));
+UI.buttons.logout.addEventListener("click", () => {
+  localStorage.removeItem("id");
+  resetGame;
+  location.reload();
+});
 
 UI.navigation.menu.addEventListener("click", resetGame);
 UI.navigation.leaderboard.addEventListener("click", () => showPage("leaderboard"));
@@ -93,6 +100,7 @@ async function createAccount() {
     if (success) {
       localStorage.setItem("id", data);
       UI.modal.auth.close();
+      collectProfileData();
     }
   } else {
     UI.auth.error.innerText = error;
@@ -116,6 +124,20 @@ async function loginAccount(username, password) {
   } else {
     UI.auth.error.innerText = "Incorrect username or password";
   }
+}
+
+async function collectProfileData() {
+  const userKey = localStorage.getItem("id");
+  if (!userKey) return console.log("WTF");
+  const { data, error } = await getUserById(userKey);
+  console.log(data);
+
+  User.name = data.username;
+  User.score = data.score;
+  User.attempts = 111;
+  showAccountInfo(User.name, User.score, User.attempts);
+
+  console.log(User);
 }
 
 // =====================
